@@ -1,0 +1,201 @@
+@import "tailwindcss";
+@import "animate.css";
+
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("/fonts/clash-display-font/ClashDisplay-Extralight.otf") format("opentype");
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("/fonts/clash-display-font/ClashDisplay-Light.otf") format("opentype");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("/fonts/clash-display-font/ClashDisplay-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("/fonts/clash-display-font/ClashDisplay-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("/fonts/clash-display-font/ClashDisplay-Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ClashDisplay";
+  src: url("/fonts/clash-display-font/ClashDisplay-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_24pt-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_24pt-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter_18pt-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-display: swap;
+}
+
+.font-clash {
+  font-family: "ClashDisplay", "Inter", system-ui, sans-serif;
+}
+
+.font-inter {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+.text-brand-gradient {
+  background: linear-gradient(90deg, #40c1ac 0%, #04dda6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-brand-gradient {
+  background: linear-gradient(90deg, #40c1ac 0%, #04dda6 100%);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bg__base {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 48% 70% at 50% 42%, #ffffff 0%, rgba(255, 255, 255, 0.92) 35%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(90deg, #4fd6b6 0%, #8ae9d2 22%, #c9f6eb 50%, #8ae9d2 78%, #4fd6b6 100%);
+}
+
+.hero-bg__stripes {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(122deg,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 34px,
+      rgba(255, 255, 255, 0.28) 34px,
+      rgba(255, 255, 255, 0.28) 62px);
+  -webkit-mask-image: radial-gradient(ellipse 60% 85% at 50% 45%, transparent 0%, transparent 35%, #000 85%);
+  mask-image: radial-gradient(ellipse 60% 85% at 50% 45%, transparent 0%, transparent 35%, #000 85%);
+}
+
+.hero-bg__fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.85) 48%, #ffffff 58%);
+}
+
+:root {
+  --animate-duration: 1.4s;
+}
+
+@media (max-width: 640px) {
+  .hero-bg__base {
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 40%, #ffffff 0%, rgba(255, 255, 255, 0.9) 35%, rgba(255, 255, 255, 0) 100%),
+      linear-gradient(90deg, #4fd6b6 0%, #9aecd8 30%, #c9f6eb 50%, #9aecd8 70%, #4fd6b6 100%);
+  }
+
+  .hero-bg__stripes {
+    background: repeating-linear-gradient(122deg,
+        rgba(255, 255, 255, 0) 0px,
+        rgba(255, 255, 255, 0) 20px,
+        rgba(255, 255, 255, 0.28) 20px,
+        rgba(255, 255, 255, 0.28) 38px);
+  }
+
+  .hero-bg__fade {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 35%, rgba(255, 255, 255, 0.85) 52%, #ffffff 62%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate__animated {
+    animation: none !important;
+  }
+}

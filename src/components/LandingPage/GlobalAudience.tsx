@@ -24,10 +24,13 @@ const AUTOPLAY_MS = 4200;
 const BOOK_RATIO = 1887 / 1184;
 
 const heading: { text: string; accent?: boolean; br?: boolean }[] = [
-    { text: "Your Book", br: true },
-    { text: "Deserves" },
-    { text: "A Global Audience", accent: true },
+    { text: "Your Story", br: true },
+    { text: "Deserves to Be Read", br: true },
+    { text: "Around the World", accent: true },
 ];
+
+const subheadline =
+    "Join thousands of successful writers who have turned their drafts into internationally distributed bestsellers across every genre.";
 
 const words: Variants = {
     hidden: {},
@@ -36,6 +39,11 @@ const words: Variants = {
 
 const word: Variants = {
     hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
+    show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1.1, ease: smooth } },
+};
+
+const subVariants: Variants = {
+    hidden: { opacity: 0, y: 22, filter: "blur(6px)" },
     show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1.1, ease: smooth } },
 };
 
@@ -173,8 +181,8 @@ const NavButton = ({ dir, onClick }: { dir: "prev" | "next"; onClick: () => void
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         className={`flex h-[42px] w-[42px] items-center justify-center rounded-full outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#40C1AC] focus-visible:ring-offset-2 xl:h-[46px] xl:w-[46px] 2xl:h-[52px] 2xl:w-[52px] ${dir === "next"
-                ? "bg-brand-gradient text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.35)]"
-                : "bg-white text-[#2a9a76] ring-1 ring-[#40C1AC]/40 hover:shadow-[0_8px_22px_rgba(64,193,172,0.2)]"
+            ? "bg-brand-gradient text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.35)]"
+            : "bg-white text-[#2a9a76] ring-1 ring-[#40C1AC]/40 hover:shadow-[0_8px_22px_rgba(64,193,172,0.2)]"
             }`}
     >
         <svg viewBox="0 0 24 24" fill="none" className="h-[45%] w-[45%]" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -253,7 +261,7 @@ const GlobalAudience = () => {
                     transition={{ duration: 1, ease: smooth }}
                     className="bg-brand-gradient font-inter inline-flex h-[24px] items-center rounded-full px-[20px] text-[11.5px] font-medium text-[#0f3d34] xl:h-[26px] xl:text-[12.5px] 2xl:h-[28px] 2xl:text-[13.5px]"
                 >
-                    How It Works
+                    The Publishing Journey
                 </motion.span>
 
                 <motion.h2
@@ -277,6 +285,17 @@ const GlobalAudience = () => {
                         </span>
                     ))}
                 </motion.h2>
+
+                <motion.p
+                    variants={subVariants}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 1.1, delay: 0.6, ease: smooth }}
+                    className="font-inter mx-auto mt-5 max-w-[640px] text-[15px] leading-[1.65] text-[#5a6b73] sm:mt-6 sm:text-[16px] lg:mt-7 lg:max-w-[680px] lg:text-[17px] xl:text-[18px] 2xl:mt-8"
+                >
+                    {subheadline}
+                </motion.p>
             </div>
 
             <motion.div

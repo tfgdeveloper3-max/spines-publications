@@ -9,7 +9,7 @@ const LOOP_X = STRIPE_PERIOD / Math.sin((STRIPE_ANGLE * Math.PI) / 180);
 
 const quicklinks = [
     { label: "Home", href: "#" },
-    { label: "About", href: "#about" },
+    { label: "About Us", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Portfolio", href: "#portfolio" },
     { label: "Blog", href: "#blog" },
@@ -153,7 +153,7 @@ const Footer = () => {
                     </motion.div>
 
                     <motion.div variants={col}>
-                        <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Quicklinks</h3>
+                        <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Quick Links</h3>
                         <ul className="font-inter mt-3 flex flex-col gap-2 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
                             {quicklinks.map((l) => (
                                 <li key={l.label}>
@@ -195,12 +195,9 @@ const Footer = () => {
 
                 <motion.p
                     variants={col}
-                    className="font-inter mt-12 text-[12.5px] leading-[1.6] text-[#4a5058] lg:mt-12 xl:text-[13px] 2xl:text-[14.5px]"
+                    className="font-inter mt-12 max-w-[820px] text-[12.5px] leading-[1.65] text-[#4a5058] lg:mt-12 xl:text-[13px] 2xl:text-[14.5px]"
                 >
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-                    dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in
-                    London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has
-                    survived not only many decades, but also the leap into electronic typesetting.
+                    We are dedicated to empowering authors worldwide by transforming manuscripts into published works. From professional editing and custom cover design to global distribution and marketing strategies, our team provides all the tools and guidance you need to bring your vision to readers everywhere.
                 </motion.p>
 
                 <motion.div

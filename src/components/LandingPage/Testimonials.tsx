@@ -10,28 +10,22 @@ const smooth: Easing = [0.16, 1, 0.3, 1];
 
 const testimonials = [
     {
-        text: "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus a quod maxime placeat facere possimus, omnis voluptas assumenda aut, omnis dolor repellendus temporibus",
+        text: "Publishing my debut novel felt completely overwhelming until I found this platform. The team guided me through editing and cover design seamlessly, making the entire journey smooth and rewarding!",
         name: "Brooklyn Simmons",
-        role: "Ceo and Founder",
+        role: "Fiction Author & Content Creator",
         avatar: client1,
     },
     {
-        text: "Spines made publishing my first novel feel effortless. From the manuscript upload to the final cover, every step was clear, and my project manager was there whenever I had a question.",
-        name: "Darlene Robertson",
-        role: "Fiction Author",
+        text: "The dashboard made tracking my book's progress effortless. I kept 100% of my rights and saw my book available globally in print and eBook formats within weeks.",
+        name: "Marcus Chen",
+        role: "Business Author & Speaker",
         avatar: client2,
     },
     {
-        text: "I had been sitting on my memoir for years. Within a few months it was edited, beautifully designed, and available on Amazon and Barnes & Noble. I couldn't be happier with the result.",
-        name: "Cameron Williamson",
-        role: "Memoir Writer",
-        avatar: client3,
-    },
-    {
-        text: "The dashboard keeps everything in one place and the royalty tracking is incredibly transparent. Spines treated my children's book like it was their own, and readers love it.",
-        name: "Jenny Wilson",
+        text: "Working with a dedicated project manager gave me total confidence. The final print quality exceeded my expectations, and my readers love the design!",
+        name: "Sarah Jenkins",
         role: "Children's Book Author",
-        avatar: client4,
+        avatar: client3,
     },
 ];
 
@@ -138,14 +132,14 @@ const Testimonials = () => {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, margin: "-60px" }}
-                    className="font-clash mx-auto max-w-[560px] text-center text-[26px] leading-[1.18] tracking-[-0.01em] text-[#1d3a40] sm:text-[32px] lg:max-w-[600px] lg:text-[32px] xl:max-w-[680px] xl:text-[36px] 2xl:max-w-[820px] 2xl:text-[44px]"
+                    className="font-clash mx-auto max-w-[560px] text-center text-[26px] leading-[1.18] tracking-[-0.01em] text-[#1d3a40] sm:text-[32px] lg:max-w-[640px] lg:text-[32px] xl:max-w-[760px] xl:text-[36px] 2xl:max-w-[920px] 2xl:text-[44px]"
                 >
-                    {"8,000+ Authors".split(" ").map((w, i) => (
+                    {"Over 8,000+ Writers".split(" ").map((w, i) => (
                         <motion.span key={`a${i}`} variants={word} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
                             {w}
                         </motion.span>
                     ))}
-                    {"Have Published the Books on their Own".split(" ").map((w, i) => (
+                    {"Have Successfully Published Their Books with Complete Creative Freedom".split(" ").map((w, i) => (
                         <motion.span key={`b${i}`} variants={word} className="mr-[0.25em] inline-block font-normal">
                             {w}
                         </motion.span>
@@ -257,7 +251,7 @@ const Testimonials = () => {
                                 <Counter to={50} start={rightInView} />+
                             </span>
                             <span className="mt-1 block text-[20px] font-normal underline decoration-[1px] underline-offset-4 xl:text-[22px] 2xl:text-[27px]">
-                                Repeat Clients
+                                Repeat Authors
                             </span>
                         </h3>
 
@@ -266,7 +260,7 @@ const Testimonials = () => {
                                 <motion.img
                                     key={i}
                                     src={src}
-                                    alt="Repeat client"
+                                    alt="Repeat author"
                                     initial={{ opacity: 0, scale: 0.3, y: 20 }}
                                     animate={rightInView ? { opacity: 1, scale: 1, y: 0 } : {}}
                                     transition={{ duration: 0.9, delay: 0.6 + i * 0.12, ease: smooth }}
@@ -277,7 +271,7 @@ const Testimonials = () => {
                         </div>
 
                         <p className="font-inter mt-6 max-w-[220px] text-[11.5px] leading-[1.6] text-[#123c35] xl:text-[12px] 2xl:max-w-[260px] 2xl:text-[14px]">
-                            Trexa delivers solutions that surpass client goals, building trust, innovation, & lasting partnerships for sustainable growth.
+                            Delivering publishing solutions that exceed expectations—building trust, creative freedom, and long-term partnerships to help authors grow their impact.
                         </p>
                     </motion.div>
                 </div>

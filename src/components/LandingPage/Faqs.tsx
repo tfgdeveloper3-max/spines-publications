@@ -6,28 +6,24 @@ const smooth: Easing = [0.16, 1, 0.3, 1];
 
 const faqs = [
     {
-        q: "How long does it take to publish my book with Spines?",
-        a: "Most books go from manuscript upload to live in stores within 6 to 10 weeks. The exact timeline depends on the length of your manuscript, the editing depth you choose, and how quickly you review each stage in your dashboard.",
+        q: "Do I keep full copyright and ownership of my book?",
+        a: "Yes, absolutely. You retain 100% of your rights, copyrights, and royalties. Our platform provides the publishing tools and distribution services while you maintain complete creative and financial ownership of your work.",
     },
     {
-        q: "Do I keep the rights to my book?",
-        a: "Yes. You retain 100% of the rights to your work. Spines only receives the permissions needed to produce and distribute your book, and you can end the agreement at any time.",
+        q: "How long does the publishing process take from start to finish?",
+        a: "Most books are fully edited, designed, and published within 4 to 8 weeks, depending on the length of your manuscript and the level of editing required. You can track every step in real-time on your dashboard.",
     },
     {
-        q: "Which formats can I publish in?",
-        a: "You can publish as an eBook, a paperback, a hardcover, and an audiobook. Every format is professionally typeset and prepared to meet each retailer's requirements.",
+        q: "Where will my book be available for purchase?",
+        a: "Your book will be distributed globally across major online retailers like Amazon, Barnes & Noble, Apple Books, and independent bookstores worldwide in eBook, paperback, hardcover, and audiobook formats.",
     },
     {
-        q: "Where will my book be sold?",
-        a: "Your book is distributed to Amazon Kindle, Barnes & Noble, Apple Books, Waterstones, Scribd, IngramSpark and hundreds of other online and physical stores around the world.",
+        q: "What support do I receive during the publishing process?",
+        a: "You will be paired with a dedicated project manager who guides you through every stage—from professional editing and cover design to formatting and final distribution launch.",
     },
     {
-        q: "How do royalties work and when do I get paid?",
-        a: "Royalties are calculated from every sale across all retailers and shown in real time in your dashboard. Payouts are sent monthly directly to your bank account or PayPal.",
-    },
-    {
-        q: "Can I make changes after my book is published?",
-        a: "Absolutely. You can update your interior, cover, description, or pricing at any time. Simply upload the new version from your dashboard and our team will handle the rest.",
+        q: "Can I publish my book in multiple formats?",
+        a: "Yes! We support multi-format publishing. You can launch your manuscript simultaneously as an eBook, paperback, hardcover, or audiobook with just a few clicks.",
     },
 ];
 
@@ -75,8 +71,8 @@ const FAQItem = ({ q, a, open, onToggle }: { q: string; a: string; open: boolean
             layout
             transition={{ layout: { duration: 0.6, ease: smooth } }}
             className={`relative overflow-hidden rounded-[16px] border transition-[background-color,border-color,box-shadow] duration-500 ${open
-                    ? "border-[#40C1AC]/40 bg-[linear-gradient(135deg,#f2fdf9_0%,#ffffff_60%)] shadow-[0_14px_40px_rgba(64,193,172,0.12)]"
-                    : "border-[#ececef] bg-white hover:border-[#40C1AC]/30 hover:shadow-[0_8px_24px_rgba(20,20,40,0.05)]"
+                ? "border-[#40C1AC]/40 bg-[linear-gradient(135deg,#f2fdf9_0%,#ffffff_60%)] shadow-[0_14px_40px_rgba(64,193,172,0.12)]"
+                : "border-[#ececef] bg-white hover:border-[#40C1AC]/30 hover:shadow-[0_8px_24px_rgba(20,20,40,0.05)]"
                 }`}
         >
             {open && (
@@ -177,7 +173,7 @@ const FAQ = () => {
                         transition={{ duration: 1.1, delay: 0.4, ease: smooth }}
                         className="font-inter mt-4 max-w-[380px] text-[14px] leading-[1.7] text-[#5a6470] xl:text-[15px] 2xl:max-w-[440px] 2xl:text-[16.5px]"
                     >
-                        Everything you need to know about publishing with Spines, from your first upload to your first royalty payment.
+                        Everything you need to know about publishing with us, from your first upload to your first royalty payment.
                     </motion.p>
 
                     <motion.div

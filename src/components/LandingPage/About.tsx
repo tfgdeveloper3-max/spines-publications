@@ -6,23 +6,23 @@ const smooth: Easing = [0.16, 1, 0.3, 1];
 const features = [
     {
         no: "01",
-        title: "Premium-Quality Publishing",
-        desc: "Publish with the highest standards. Your book will be expertly designed and produced, ready to inspire readers.",
+        title: "World-Class Book Design & Publishing",
+        desc: "Give your story the presentation it deserves. From custom interior formatting to striking cover designs, we ensure your book meets top industry standards.",
     },
     {
         no: "02",
-        title: "Personal Guidance",
-        desc: "Your dedicated project manager is with you every step of the way, making the process seamless, efficient, and enjoyable.",
+        title: "One-on-One Dedicated Support",
+        desc: "Never feel lost in the process. Work alongside a dedicated publishing expert who guides you step-by-step from raw manuscript to finished print.",
     },
     {
         no: "03",
-        title: "Full Creative Control",
-        desc: "Enjoy the freedom to publish your way. Manage every stage of the process in one intuitive dashboard and get professional support when you need it.",
+        title: "Complete Ownership & Dashboard Control",
+        desc: "Retain 100% of your rights and creative freedom. Track your project's progress, review edits, and control every detail through one simple platform.",
     },
     {
         no: "04",
-        title: "Global Distribution And Marketing",
-        desc: "In any format — eBook, audiobook, or print-on-demand — your book will be distributed and marketed worldwide, with just a few clicks.",
+        title: "Worldwide Reach Across All Formats",
+        desc: "Sell your book globally as a hardcopy, paperback, eBook, or audiobook. We handle global distribution so readers anywhere can buy your work.",
     },
 ];
 
@@ -78,10 +78,10 @@ const About = () => {
                         className="font-clash mt-4 leading-[1.12] tracking-[-0.01em]"
                     >
                         <span className="text-brand-gradient block text-[28px] font-medium sm:text-[36px] md:text-[40px] lg:text-[38px] xl:text-[44px] 2xl:text-[48px]">
-                            Publishing Your Book
+                            Bring Your Book to Life
                         </span>
                         <span className="block text-[28px] font-normal text-[#141414] sm:text-[36px] md:text-[40px] lg:text-[38px] xl:text-[44px] 2xl:text-[48px]">
-                            Has Never Been Easier
+                            Without the Hassle
                         </span>
                     </motion.h2>
 

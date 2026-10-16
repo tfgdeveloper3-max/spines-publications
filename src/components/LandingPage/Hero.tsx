@@ -62,13 +62,13 @@ const Hero = () => {
                         className="animate__animated animate__fadeInUp animate__slow block text-[22px] font-normal tracking-[-0.01em] text-[#1c1c1c] sm:text-[30px] md:text-[34px] lg:text-[38px] xl:text-[42px] 2xl:text-[50px]"
                         style={{ animationDelay: "0.2s" }}
                     >
-                        Turning Your Words Into
+                        Your Story Deserves
                     </span>
                     <span
                         className="text-brand-gradient animate__animated animate__fadeInUp animate__slow mt-1 block text-[32px] font-semibold tracking-[-0.01em] sm:text-[44px] md:text-[52px] lg:text-[58px] xl:text-[64px] 2xl:text-[76px]"
                         style={{ animationDelay: "0.4s" }}
                     >
-                        Published Masterpieces.
+                        Premium Publishing Made Simple.
                     </span>
                 </h1>
 
@@ -76,8 +76,7 @@ const Hero = () => {
                     className="font-inter animate__animated animate__fadeInUp animate__slow mt-3 max-w-[340px] text-[13px] leading-[1.6] text-[#4a4a4a] sm:max-w-[560px] sm:text-[14px] lg:max-w-[640px] lg:text-[15px] xl:max-w-[700px] xl:text-[16px] 2xl:max-w-[780px] 2xl:text-[17px]"
                     style={{ animationDelay: "0.6s" }}
                 >
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the make a type specimen book.
+                    From your initial manuscript to a fully polished book on the shelves, we guide authors through every step of the publishing journey. Get expert editing, custom cover designs, and seamless distribution—all tailored to bring your story to life.
                 </p>
 
                 <div className="animate__animated animate__zoomIn animate__slow mt-5 lg:mt-6" style={{ animationDelay: "0.8s" }}>

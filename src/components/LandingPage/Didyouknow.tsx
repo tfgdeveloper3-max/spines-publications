@@ -21,8 +21,8 @@ const W = 1100;
 const H = 540;
 
 const headingLines: { text: string; accent?: boolean }[][] = [
-    [{ text: "9 Out of 10 Fully" }, { text: "Written Books", accent: true }],
-    [{ text: "Never Get" }, { text: "Published", accent: true }],
+    [{ text: "Most Completed" }, { text: "Manuscripts", accent: true }],
+    [{ text: "Never See the" }, { text: "Light of Day", accent: true }],
 ];
 
 const words: Variants = {
@@ -146,16 +146,15 @@ const DidYouKnow = () => {
                             {...fadeUp(0.7)}
                             className="font-inter mt-4 max-w-[420px] text-[13px] leading-[1.7] text-[#4c5466] xl:max-w-[460px] xl:text-[13.5px] 2xl:max-w-[520px] 2xl:text-[15px]"
                         >
-                            This is because the publishing process is full of barriers: overcomplicated, time-consuming, and out of
-                            reach for most writers. Frustrated and stuck, many give up before they even get the chance.
+                            Traditional publishing can feel like a maze of gatekeepers, confusing contracts, and overwhelming delays. Too many brilliant stories remain hidden simply because navigating the process is frustrating and exhausting.
                         </motion.p>
 
                         <motion.p
                             {...fadeUp(0.85)}
                             className="font-inter mt-3 max-w-[420px] text-[13px] leading-[1.7] text-[#4c5466] xl:max-w-[460px] xl:text-[13.5px] 2xl:max-w-[520px] 2xl:text-[15px]"
                         >
-                            Founded by authors and writers themselves, Spines understands the many challenges authors face, aims to{" "}
-                            <strong className="font-semibold text-[#2c3445]">democratize publishing</strong> for writers everywhere.
+                            Built by authors who know these challenges firsthand, Spines was created to{" "}
+                            <strong className="font-semibold text-[#2c3445]">level the playing field</strong>. We remove the roadblocks so you can focus on what matters most—sharing your message with the world.
                         </motion.p>
 
                         <motion.blockquote

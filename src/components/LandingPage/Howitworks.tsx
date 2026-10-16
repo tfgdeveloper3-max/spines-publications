@@ -82,64 +82,81 @@ type Step = {
     points: { icon: ReactNode; text: string }[];
     image: string;
     showPages: boolean;
+    cta: string;
 };
 
 const steps: Step[] = [
     {
         label: "Step 1",
-        title: "Upload Your Manuscript",
-        heading: { before: "Upload Your", accent: "Manuscript", after: "With A Few Clicks" },
+        title: "Submit Your Manuscript",
+        heading: { before: "Submit Your", accent: "Manuscript", after: "in Seconds" },
         points: [
             {
                 icon: <CloudUpload />,
-                text: "Easily upload your manuscript using Spines' user-friendly dashboard. Just fill in a few simple details, like the book title, author's name, and category.",
+                text: "Effortlessly import your draft directly into our streamlined dashboard. Simply add essential book details like title, author name, and primary genre.",
             },
-            { icon: <Award />, text: "Instantly receive a copyright certificate for your book." },
+            {
+                icon: <Award />,
+                text: "Secure peace of mind right away with automated copyright protection issued directly for your project.",
+            },
         ],
         image: step1Img,
         showPages: true,
+        cta: "Get Started",
     },
     {
         label: "Step 2",
-        title: "Edit & Perfect Your Book",
-        heading: { before: "Edit & Perfect", accent: "Your Book", after: "With Expert Help" },
+        title: "Refine & Edit Your Work",
+        heading: { before: "Polished to", accent: "Professional", after: "Standards" },
         points: [
             {
                 icon: <Pen />,
-                text: "Professional editors and proofreaders polish your writing, fixing grammar, flow, and consistency while keeping your voice intact.",
+                text: "Collaborate with professional editors to fine-tune your grammar, style, and narrative flow without losing your unique voice.",
             },
-            { icon: <Check />, text: "Review every suggestion and approve changes right from your dashboard." },
+            {
+                icon: <Check />,
+                text: "Review changes, accept suggestions, and track your manuscript's progress directly within your workspace dashboard.",
+            },
         ],
         image: step2Img,
         showPages: false,
+        cta: "Continue Editing",
     },
     {
         label: "Step 3",
-        title: "Design Your Cover & Layout",
-        heading: { before: "Design Your", accent: "Cover & Layout", after: "That Stands Out" },
+        title: "Craft Cover & Interior Layout",
+        heading: { before: "Eye-Catching", accent: "Design", after: "That Sells" },
         points: [
             {
                 icon: <Palette />,
-                text: "Work with experienced designers to create an eye-catching cover that captures the heart of your story.",
+                text: "Work with elite designers to create a striking, genre-appropriate cover that stops readers in their tracks.",
             },
-            { icon: <Layout />, text: "Get a professionally typeset interior for print and eBook formats." },
+            {
+                icon: <Layout />,
+                text: "Automatically format your book's interior pages for both print and digital readers, ensuring clean typography and perfect margins.",
+            },
         ],
         image: step3Img,
         showPages: false,
+        cta: "Preview Designs",
     },
     {
         label: "Step 4",
-        title: "Publish & Distribute",
-        heading: { before: "Publish &", accent: "Distribute", after: "Your Book Worldwide" },
+        title: "Launch & Distribute Globally",
+        heading: { before: "Reach Readers on", accent: "Every Major", after: "Platform" },
         points: [
             {
                 icon: <Globe />,
-                text: "Your book goes live on Amazon, Barnes & Noble, Apple Books, and hundreds of other stores across the globe.",
+                text: "Publish your book as a paperback, hardcover, eBook, or audiobook all from a single launch.",
             },
-            { icon: <Chart />, text: "Track sales and royalties in real time from one simple dashboard." },
+            {
+                icon: <Chart />,
+                text: "Get listed on top retail platforms like Amazon, Barnes & Noble, and international bookstores while retaining full royalty control.",
+            },
         ],
         image: step4Img,
         showPages: false,
+        cta: "Publish My Book",
     },
 ];
 
@@ -180,10 +197,10 @@ const HowItWorks = () => {
                     className="font-clash mt-3 leading-[1.12] tracking-[-0.01em]"
                 >
                     <span className="text-brand-gradient block text-[28px] font-medium sm:text-[34px] lg:text-[34px] xl:text-[38px] 2xl:text-[46px]">
-                        Publish with Spines
+                        From Draft to Published Book
                     </span>
                     <span className="block text-[25px] font-normal text-[#1c1c1c] sm:text-[31px] lg:text-[31px] xl:text-[35px] 2xl:text-[42px]">
-                        in Just Four Simple Steps
+                        in 4 Easy Steps
                     </span>
                 </motion.h2>
             </div>
@@ -203,7 +220,7 @@ const HowItWorks = () => {
                     <div className="relative px-4 pt-5 sm:px-6 sm:pt-6 xl:px-8 xl:pt-7">
                         <div
                             role="tablist"
-                            className="-mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 [scrollbar-width:none] sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-4 md:gap-4 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"
+                            className="-mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 [scrollbar-width:none] sm:-mx-6 sm:px-6 md:mx-0 md:grid md:grid-cols-[repeat(4,minmax(0,1fr))] md:gap-x-8 md:overflow-visible md:px-0 lg:gap-x-10 xl:gap-x-12 [&::-webkit-scrollbar]:hidden"
                         >
                             {steps.map((s, i) => {
                                 const isActive = i === active;
@@ -213,14 +230,13 @@ const HowItWorks = () => {
                                         role="tab"
                                         aria-selected={isActive}
                                         onClick={() => setActive(i)}
-                                        className="group relative shrink-0 snap-start pb-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#40C1AC]/50 md:justify-self-start"
+                                        className="group relative shrink-0 snap-start pb-3 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#40C1AC]/50 md:min-w-0 md:justify-self-start"
                                     >
                                         <span className="font-clash block text-[13px] font-medium text-[#2fc39f] xl:text-[14.5px] 2xl:text-[16px]">
                                             {s.label}
                                         </span>
                                         <span
-                                            className={`font-clash mt-1 block whitespace-nowrap text-[13.5px] font-medium transition-colors duration-500 xl:text-[15px] 2xl:text-[17px] ${isActive ? "text-[#16302b]" : "text-[#6b7480] group-hover:text-[#16302b]"
-                                                }`}
+                                            className={`font-clash mt-1 block whitespace-nowrap text-[13.5px] font-medium leading-[1.35] transition-colors duration-500 md:whitespace-normal xl:text-[15px] 2xl:text-[17px] ${isActive ? "text-[#16302b]" : "text-[#6b7480] group-hover:text-[#16302b]"}`}
                                         >
                                             {s.title}
                                         </span>
@@ -280,7 +296,7 @@ const HowItWorks = () => {
                                     <span className="transition-transform duration-500 group-hover:rotate-45">
                                         <ArrowCircle className="h-[32px] w-[32px] xl:h-[36px] xl:w-[36px] 2xl:h-[42px] 2xl:w-[42px]" />
                                     </span>
-                                    Get Started
+                                    {step.cta}
                                 </motion.a>
                             </motion.div>
                         </AnimatePresence>

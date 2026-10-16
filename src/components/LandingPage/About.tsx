@@ -40,8 +40,8 @@ const Asterisk = () => (
     <svg viewBox="0 0 120 120" className="h-full w-full">
         <defs>
             <linearGradient id="ast-grad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#40C1AC" />
-                <stop offset="100%" stopColor="#04DDA6" />
+                <stop offset="0%" stopColor="#c7a8de" />
+                <stop offset="100%" stopColor="#9a5fc1" />
             </linearGradient>
         </defs>
         {[0, 60, 120].map((deg) => (

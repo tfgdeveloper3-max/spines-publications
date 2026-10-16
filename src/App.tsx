@@ -1,30 +1,43 @@
-import Hero from "./components/LandingPage/Hero";
-import Stats from "./components/LandingPage/Stats";
-import About from "./components/LandingPage/About";
-import DidYouKnow from "./components/LandingPage/Didyouknow";
-import Partners from "./components/Partners";
-import Navbar from "./components/Navbar";
-import HowItWorks from "./components/LandingPage/Howitworks";
-import GlobalAudience from "./components/LandingPage/GlobalAudience";
-import Testimonials from "./components/LandingPage/Testimonials";
-import FAQ from "./components/LandingPage/Faqs";
-import Footer from "./components/Footer";
+import { useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import HomePage from "./pages/Home/page";
+import ServicesPage from "./pages/Services/page";
+import AboutPage from "./pages/Aboutus/page";
+import ContactPage from "./pages/Contact/page";
+import PricingPage from "./pages/Pricing/page";
+import ReviewsPage from "./pages/Reviews/page";
+
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+  }, [pathname, hash]);
+
+  return null;
+};
 
 function App() {
   return (
-    <main>
-      <Navbar />
-      <Hero />
-      <Stats />
-      <About />
-      <DidYouKnow />
-      <Partners />
-      <HowItWorks />
-      <GlobalAudience />
-      <Testimonials />
-      <FAQ />
-      <Footer />
-    </main>
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, type Easing, type Variants } from "framer-motion";
-import { getSummary, ratingLabel, reviews, services, type Service } from "../../data/reviewsData";
+import { AnimatePresence, motion, type Easing, type Variants } from "framer-motion";
+import { getSummary, ratingLabel, reviews } from "../../data/reviewsData";
 import Stars from "./ReviewStars";
 import ReviewCard from "./ReviewsCard";
 
@@ -8,7 +8,6 @@ import ReviewCard from "./ReviewsCard";
 const smooth: Easing = [0.16, 1, 0.3, 1];
 const PAGE_SIZE = 6;
 
-type Filter = "All" | Service;
 type Sort = "recent" | "highest" | "lowest";
 
 const words: Variants = {
@@ -22,27 +21,19 @@ const word: Variants = {
 };
 
 const ReviewsList = ({ onWrite }: { onWrite: () => void }) => {
-    const [filter, setFilter] = useState<Filter>("All");
     const [sort, setSort] = useState<Sort>("recent");
     const [visible, setVisible] = useState(PAGE_SIZE);
 
-    const filtered = useMemo(() => {
-        const list = filter === "All" ? reviews : reviews.filter((r) => r.service === filter);
-        const sorted = [...list];
+    const sortedReviews = useMemo(() => {
+        const sorted = [...reviews];
         if (sort === "recent") sorted.sort((a, b) => b.date.localeCompare(a.date));
         if (sort === "highest") sorted.sort((a, b) => b.rating - a.rating || b.date.localeCompare(a.date));
         if (sort === "lowest") sorted.sort((a, b) => a.rating - b.rating || b.date.localeCompare(a.date));
         return sorted;
-    }, [filter, sort]);
+    }, [sort]);
 
-    const { total, average } = getSummary(filtered);
-    const shown = filtered.slice(0, visible);
-    const filters: Filter[] = ["All", ...services];
-
-    const changeFilter = (f: Filter) => {
-        setFilter(f);
-        setVisible(PAGE_SIZE);
-    };
+    const { total, average } = getSummary(sortedReviews);
+    const shown = sortedReviews.slice(0, visible);
 
     return (
         <section id="reviews" className="relative w-full scroll-mt-24 overflow-hidden bg-[#fbfbfc] py-16 sm:py-20 lg:py-24 2xl:py-32">
@@ -91,49 +82,8 @@ const ReviewsList = ({ onWrite }: { onWrite: () => void }) => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.1, delay: 0.35, ease: smooth }}
-                    className="mt-8 flex justify-center sm:mt-10"
-                >
-                    <LayoutGroup id="review-filters">
-                        <div
-                            role="tablist"
-                            aria-label="Filter reviews by service"
-                            className="-mx-5 flex max-w-[calc(100%+40px)] gap-1 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:max-w-full sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
-                        >
-                            <div className="flex gap-1 rounded-full bg-white p-1 shadow-[0_4px_18px_rgba(20,20,40,0.05)] ring-1 ring-[#eceef1] sm:flex-wrap sm:justify-center">
-                                {filters.map((f) => {
-                                    const active = f === filter;
-                                    return (
-                                        <button
-                                            key={f}
-                                            role="tab"
-                                            aria-selected={active}
-                                            onClick={() => changeFilter(f)}
-                                            className={`font-inter relative shrink-0 rounded-full px-4 py-2 text-[12.5px] font-medium outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-[#40C1AC]/50 xl:px-5 xl:text-[13.5px] 2xl:text-[15px] ${active ? "text-[#0f3d34]" : "text-[#4a4f57] hover:text-[#141414]"
-                                                }`}
-                                        >
-                                            {active && (
-                                                <motion.span
-                                                    layoutId="review-filter-pill"
-                                                    transition={{ duration: 0.5, ease: smooth }}
-                                                    className="bg-brand-gradient absolute inset-0 rounded-full shadow-[0_6px_16px_rgba(4,221,166,0.3)]"
-                                                />
-                                            )}
-                                            <span className="relative">{f}</span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </LayoutGroup>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
                     transition={{ duration: 1.1, delay: 0.45, ease: smooth }}
-                    className="mt-6 flex flex-col items-center justify-between gap-4 rounded-[14px] border border-[#eceef1] bg-white px-5 py-4 sm:flex-row xl:px-6"
+                    className="mt-8 flex flex-col items-center justify-between gap-4 rounded-[14px] border border-[#eceef1] bg-white px-5 py-4 sm:mt-10 sm:flex-row xl:px-6"
                 >
                     <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:justify-start">
                         <span className="font-clash text-[18px] font-semibold text-[#141414] xl:text-[20px]">{total ? ratingLabel(average) : "No reviews"}</span>
@@ -164,11 +114,7 @@ const ReviewsList = ({ onWrite }: { onWrite: () => void }) => {
                     </AnimatePresence>
                 </motion.div>
 
-                {filtered.length === 0 && (
-                    <p className="font-inter mt-10 text-center text-[14px] text-[#6b7280]">No reviews for this service yet. Be the first to share yours!</p>
-                )}
-
-                {visible < filtered.length && (
+                {visible < sortedReviews.length && (
                     <div className="mt-10 flex justify-center">
                         <motion.button
                             type="button"
@@ -177,7 +123,7 @@ const ReviewsList = ({ onWrite }: { onWrite: () => void }) => {
                             whileTap={{ scale: 0.97 }}
                             className="font-inter rounded-full bg-white px-7 py-3 text-[14px] font-medium text-[#0f3d34] ring-1 ring-[#40C1AC]/50 transition-shadow hover:shadow-[0_8px_22px_rgba(64,193,172,0.2)] xl:text-[15px]"
                         >
-                            Show more reviews ({filtered.length - visible})
+                            Show more reviews ({sortedReviews.length - visible})
                         </motion.button>
                     </div>
                 )}

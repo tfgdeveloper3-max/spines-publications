@@ -56,39 +56,39 @@ type Service = { icon: ReactNode; title: string; text: string; href: string };
 
 const services: Service[] = [
     {
-        icon: <RobotIcon />,
-        title: "Ghostwriting & Manuscript",
-        text: "Turn your ideas into a complete manuscript with expert writers who capture your voice and story.",
-        href: "#ghostwriting",
-    },
-    {
         icon: <ChipIcon />,
-        title: "Editing & Proofreading",
-        text: "Polish every page with professional editors who refine grammar, flow, and consistency.",
+        title: "Manuscript Refinement",
+        text: "Transform your initial draft into a polished, market-ready masterpiece. Spines provides expert proofreading, copy editing, and developmental guidance tailored to your voice.",
         href: "#editing",
     },
     {
         icon: <BrainGearIcon />,
-        title: "Cover Design & Illustration",
-        text: "Eye-catching, genre-perfect covers and custom illustrations that make readers stop and look.",
+        title: "Bespoke Book Design",
+        text: "Capture attention on every bookshelf with custom-designed covers and clean interior typography created to match your book’s unique genre and tone.",
         href: "#cover-design",
     },
     {
-        icon: <RobotIcon />,
-        title: "Formatting & Typesetting",
-        text: "Clean, professional interior layouts ready for print, eBook, and every major retailer.",
+        icon: <ChipIcon />,
+        title: "Print & Digital Creation",
+        text: "Prepare your book for all major formats effortlessly. Spines formats your manuscript perfectly for eBook readers, paperbacks, hardcovers, and audiobooks.",
         href: "#formatting",
     },
     {
-        icon: <BrainGearIcon />,
-        title: "Publishing & Distribution",
-        text: "Launch your book worldwide on Amazon, Barnes & Noble, Apple Books, and many more stores.",
+        icon: <RobotIcon />,
+        title: "Worldwide Book Reach",
+        text: "Distribute your work seamlessly across Amazon, Barnes & Noble, and international retailers while maintaining 100% ownership and control.",
         href: "#distribution",
     },
     {
+        icon: <RobotIcon />,
+        title: "All-in-One Dashboard",
+        text: "Manage every stage of your publishing timeline in real-time with Spines’ intuitive platform—from manuscript submission to sales tracking.",
+        href: "#dashboard",
+    },
+    {
         icon: <BrainGearIcon />,
-        title: "Marketing & PR Campaigns",
-        text: "Reach the right readers with targeted ads, PR outreach, and campaigns that drive real sales.",
+        title: "Strategic Book Promotion",
+        text: "Build your author brand and maximize reader engagement with targeted promotional tools, press release campaigns, and launch strategies.",
         href: "#marketing",
     },
 ];
@@ -131,8 +131,8 @@ const ServiceCard = ({
         whileHover={{ y: -6 }}
         transition={{ duration: 0.5, ease: smooth }}
         className={`group relative isolate flex flex-col overflow-hidden rounded-[12px] p-6 outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-[#40C1AC] focus-visible:ring-offset-2 sm:p-7 xl:p-8 2xl:p-10 ${active
-                ? "shadow-[0_18px_40px_rgba(4,221,166,0.28)]"
-                : "bg-white shadow-[0_2px_0_rgba(0,0,0,0.04),0_6px_18px_rgba(20,20,40,0.07)] ring-1 ring-[#eceef1]"
+            ? "shadow-[0_18px_40px_rgba(4,221,166,0.28)]"
+            : "bg-white shadow-[0_2px_0_rgba(0,0,0,0.04),0_6px_18px_rgba(20,20,40,0.07)] ring-1 ring-[#eceef1]"
             }`}
     >
         {active && (
@@ -201,19 +201,19 @@ const ServicesGrid = () => {
                     className="font-clash text-center text-[28px] leading-[1.15] tracking-[-0.01em] text-[#2b3d44] sm:text-[34px] lg:text-[38px] xl:text-[42px] 2xl:text-[50px]"
                 >
                     <motion.span variants={headingWord} className="mr-[0.25em] inline-block font-normal">
-                        Bring
+                        Complete
                     </motion.span>
                     <motion.span variants={headingWord} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
-                        Your
+                        Publishing
                     </motion.span>
                     <motion.span variants={headingWord} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
-                        Book
+                        Solutions
                     </motion.span>
                     <motion.span variants={headingWord} className="mr-[0.25em] inline-block font-normal">
-                        to
+                        by
                     </motion.span>
                     <motion.span variants={headingWord} className="inline-block font-normal">
-                        Life
+                        Spines
                     </motion.span>
                 </motion.h2>
 

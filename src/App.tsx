@@ -2,10 +2,14 @@ import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "./pages/Home/page";
 import ServicesPage from "./pages/Services/page";
+import RouteSeo from "./components/RouteSeo";
 import AboutPage from "./pages/Aboutus/page";
 import ContactPage from "./pages/Contact/page";
 import PricingPage from "./pages/Pricing/page";
 import ReviewsPage from "./pages/Reviews/page";
+import LiveChat from "./components/LiveChat";
+import TermsPage from "./pages/Terms/page";
+import PrivacyPage from "./pages/Privacy/page";
 
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -28,6 +32,8 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <RouteSeo />
+      <LiveChat />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
@@ -35,6 +41,8 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

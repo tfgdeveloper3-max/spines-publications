@@ -1,20 +1,18 @@
 import { motion, type Easing, type Variants } from "framer-motion";
-import authorImg from "/images/author.png";
-import toniImg from "/images/toni-morrison.png";
+
+const toniImg = "/images/toni-morrison.png";
 
 const smooth: Easing = [0.16, 1, 0.3, 1];
 
-type Avatar = { x: number; y: number; size: number; float: number };
+type Avatar = { x: number; y: number; size: number; float: number; src: string };
 
 const avatars: Avatar[] = [
-    { x: 116, y: 101, size: 78, float: 5.2 },
-    { x: 183, y: 219, size: 70, float: 6.1 },
-    { x: 101, y: 333, size: 70, float: 5.6 },
-    { x: 159, y: 446, size: 70, float: 6.6 },
-    { x: 993, y: 93, size: 62, float: 5.9 },
-    { x: 912, y: 214, size: 70, float: 5.3 },
-    { x: 974, y: 338, size: 70, float: 6.4 },
-    { x: 931, y: 454, size: 54, float: 5.7 },
+    { x: 118, y: 112, size: 80, float: 5.2, src: "/images/1.png" },
+    { x: 182, y: 270, size: 74, float: 6.1, src: "/images/2.png" },
+    { x: 112, y: 428, size: 72, float: 5.6, src: "/images/3.png" },
+    { x: 988, y: 112, size: 70, float: 5.9, src: "/images/4.png" },
+    { x: 916, y: 270, size: 76, float: 5.3, src: "/images/5.png" },
+    { x: 978, y: 428, size: 68, float: 6.4, src: "/images/6.png" },
 ];
 
 const W = 1100;
@@ -55,7 +53,7 @@ const AvatarBubble = ({ a, i }: { a: Avatar; i: number }) => {
             initial={{ opacity: 0, scale: 0.4, x: left ? 60 : -60 }}
             whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 1.6, delay: 0.4 + (i % 4) * 0.15, ease: smooth }}
+            transition={{ duration: 1.6, delay: 0.4 + (i % 3) * 0.15, ease: smooth }}
         >
             <motion.div
                 animate={{ y: [0, -10, 0] }}
@@ -63,7 +61,7 @@ const AvatarBubble = ({ a, i }: { a: Avatar; i: number }) => {
                 whileHover={{ scale: 1.08 }}
                 className="aspect-square w-full overflow-hidden rounded-full bg-[#e9ecef] shadow-[0_10px_25px_rgba(30,40,60,0.12)] ring-[3px] ring-white"
             >
-                <img src={authorImg} alt="Spines author" draggable={false} className="h-full w-full select-none object-cover" />
+                <img src={a.src} alt="Spines author" draggable={false} className="h-full w-full select-none object-cover" />
             </motion.div>
         </motion.div>
     );
@@ -74,16 +72,16 @@ const DidYouKnow = () => {
         <section className="relative w-full overflow-hidden bg-white py-14 sm:py-16 lg:py-10 xl:py-14">
             <div className="mx-auto mb-8 flex justify-center lg:hidden">
                 <div className="flex -space-x-3">
-                    {avatars.slice(0, 5).map((_, i) => (
+                    {avatars.map((a, i) => (
                         <motion.div
-                            key={i}
+                            key={a.src}
                             initial={{ opacity: 0, scale: 0.4, y: 20 }}
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 1.1, delay: i * 0.12, ease: smooth }}
                             className="h-12 w-12 overflow-hidden rounded-full bg-[#e9ecef] shadow-md ring-[3px] ring-white sm:h-14 sm:w-14"
                         >
-                            <img src={authorImg} alt="Spines author" className="h-full w-full object-cover" />
+                            <img src={a.src} alt="Spines author" className="h-full w-full object-cover" />
                         </motion.div>
                     ))}
                 </div>
@@ -93,7 +91,7 @@ const DidYouKnow = () => {
                 <div className="relative lg:aspect-[1100/540]">
                     <div className="hidden lg:block">
                         {avatars.map((a, i) => (
-                            <AvatarBubble key={i} a={a} i={i} />
+                            <AvatarBubble key={a.src} a={a} i={i} />
                         ))}
                     </div>
 

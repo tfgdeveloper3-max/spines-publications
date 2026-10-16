@@ -57,39 +57,39 @@ type Service = { icon: ReactNode; title: string; text: string; href: string };
 const services: Service[] = [
     {
         icon: <RobotIcon />,
-        title: "Ghostwriting & Manuscript",
-        text: "Turn your ideas into a complete manuscript with expert writers who capture your voice and story.",
-        href: "#ghostwriting",
+        title: "Multi-Format Publishing",
+        text: "Launch your book in paperback, hardcover, eBook, and audiobook formats simultaneously with Spines' seamless production engine.",
+        href: "#multi-format-publishing",
     },
     {
         icon: <ChipIcon />,
-        title: "Editing & Proofreading",
-        text: "Polish every page with professional editors who refine grammar, flow, and consistency.",
-        href: "#editing",
+        title: "Global Marketplace Distribution",
+        text: "Put your book on the shelves of Amazon, Barnes & Noble, and thousands of international retailers and independent bookstores worldwide.",
+        href: "#global-marketplace-distribution",
     },
     {
         icon: <BrainGearIcon />,
-        title: "Cover Design & Illustration",
-        text: "Eye-catching, genre-perfect covers and custom illustrations that make readers stop and look.",
-        href: "#cover-design",
+        title: "Rights & Royalty Control",
+        text: "Keep 100% ownership of your copyright and intellectual property while tracking your live royalty earnings straight from your Spines dashboard.",
+        href: "#rights-royalty-control",
     },
     {
         icon: <RobotIcon />,
-        title: "Formatting & Typesetting",
-        text: "Clean, professional interior layouts ready for print, eBook, and every major retailer.",
-        href: "#formatting",
+        title: "Digital Ad Management",
+        text: "Drive continuous sales post-launch with targeted ad campaigns on Amazon Ads, Meta, and Google designed specifically for book readers.",
+        href: "#digital-ad-management",
     },
     {
         icon: <BrainGearIcon />,
-        title: "Publishing & Distribution",
-        text: "Launch your book worldwide on Amazon, Barnes & Noble, Apple Books, and many more stores.",
-        href: "#distribution",
+        title: "PR & Media Coverage",
+        text: "Expand your reach through professional press releases, podcast appearances, blog tours, and author platform development with Spines.",
+        href: "#pr-media-coverage",
     },
     {
-        icon: <BrainGearIcon />,
-        title: "Marketing & PR Campaigns",
-        text: "Reach the right readers with targeted ads, PR outreach, and campaigns that drive real sales.",
-        href: "#marketing",
+        icon: <ChipIcon />,
+        title: "Post-Launch Promotion",
+        text: "Build momentum and generate authentic reader reviews, email newsletter features, and community buzz long after your publish date.",
+        href: "#post-launch-promotion",
     },
 ];
 
@@ -198,22 +198,19 @@ const ServicesGrid2 = () => {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, margin: "-60px" }}
-                    className="font-clash text-center text-[28px] leading-[1.15] tracking-[-0.01em] text-[#2b3d44] sm:text-[34px] lg:text-[38px] xl:text-[42px] 2xl:text-[50px]"
+                    className="font-clash mx-auto max-w-4xl text-center text-[28px] leading-[1.15] tracking-[-0.01em] text-[#2b3d44] sm:text-[34px] lg:text-[38px] xl:text-[42px]"
                 >
-                    <motion.span variants={headingWord} className="mr-[0.25em] inline-block font-normal">
-                        Launch
+                    <motion.span variants={headingWord} className="mr-[0.2em] inline-block font-normal">
+                        Publish &amp; Scale
                     </motion.span>
-                    <motion.span variants={headingWord} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
-                        And
+                    <motion.span variants={headingWord} className="text-brand-gradient mr-[0.2em] inline-block font-semibold">
+                        Your Author Brand
                     </motion.span>
-                    <motion.span variants={headingWord} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
-                        Grow
+                    <motion.span variants={headingWord} className="mr-[0.2em] inline-block font-normal">
+                        with
                     </motion.span>
-                    <motion.span variants={headingWord} className="mr-[0.25em] inline-block font-normal">
-                        Your
-                    </motion.span>
-                    <motion.span variants={headingWord} className="inline-block font-normal">
-                        Book
+                    <motion.span variants={headingWord} className="text-brand-gradient inline-block font-semibold">
+                        Spines
                     </motion.span>
                 </motion.h2>
 
@@ -222,11 +219,25 @@ const ServicesGrid2 = () => {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, margin: "-60px" }}
-                    className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-6 xl:gap-7 2xl:gap-8"
+                    className="mt-10"
                 >
-                    {services.map((s, i) => (
-                        <ServiceCard key={s.title} service={s} active={active === i} onActivate={() => setActive(i)} />
-                    ))}
+                    <p className="font-inter mb-5 text-xs font-semibold uppercase tracking-[0.16em] text-[#718087]">
+                        Publishing &amp; Launch Services
+                    </p>
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                        {services.slice(0, 3).map((s, i) => (
+                            <ServiceCard key={s.title} service={s} active={active === i} onActivate={() => setActive(i)} />
+                        ))}
+                    </div>
+
+                    <p className="font-inter mb-5 mt-10 text-xs font-semibold uppercase tracking-[0.16em] text-[#718087]">
+                        Post-Publishing &amp; Author Growth Services
+                    </p>
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                        {services.slice(3).map((s, i) => (
+                            <ServiceCard key={s.title} service={s} active={active === i + 3} onActivate={() => setActive(i + 3)} />
+                        ))}
+                    </div>
                 </motion.div>
             </div>
         </section>

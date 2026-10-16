@@ -1,5 +1,7 @@
 import { motion, useReducedMotion, type Easing, type Variants } from "framer-motion";
 import { ArrowCircle } from "./Navbar";
+import QuoteModal from "./QuoteModal";
+import { useState } from "react";
 
 const smooth: Easing = [0.16, 1, 0.3, 1];
 
@@ -22,6 +24,9 @@ const services = [
     "Publishing & Distribution",
     "Marketing & PR Campaigns",
 ];
+
+const disclaimer =
+    "All content and services provided by Spine Publications are for informational and publishing support purposes only. While we strive for accuracy and quality, we do not guarantee financial success or sales outcomes for any published book. Authors retain full responsibility for the content, rights, and legal compliance of their manuscripts. Our services are intended to assist in professional publishing and distribution.";
 
 const cols: Variants = {
     hidden: {},
@@ -120,103 +125,129 @@ const MailIcon = () => (
     </svg>
 );
 
+const InfoIcon = () => (
+    <svg viewBox="0 0 24 24" className="h-[15px] w-[15px] shrink-0" fill="none" stroke="#13866a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 11v5M12 8h.01" />
+    </svg>
+);
+
 const Footer = () => {
     const year = new Date().getFullYear();
+    const [quoteOpen, setQuoteOpen] = useState(false);
 
     return (
-        <footer className="relative isolate w-full overflow-hidden pt-14 sm:pt-16 lg:pt-16 2xl:pt-20">
-            <Rays />
-
-            <motion.div
-                variants={cols}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-40px" }}
-                className="mx-auto w-full max-w-[1000px] px-5 sm:px-8 lg:px-6 xl:max-w-[1080px] 2xl:max-w-[1280px]"
-            >
-                <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.35fr_0.55fr_1.15fr_0.95fr] lg:gap-x-8">
-                    <motion.div variants={col} className="col-span-2 md:col-span-3 lg:col-span-1">
-                        <h2 className="font-clash text-[30px] leading-[1.15] tracking-[-0.01em] text-[#141414] sm:text-[34px] lg:text-[32px] xl:text-[36px] 2xl:text-[44px]">
-                            <span className="block font-normal">Your Story</span>
-                            <span className="text-brand-gradient font-medium">Deserves</span>
-                            <span className="font-normal"> to Soar</span>
-                        </h2>
-                        <a
-                            href="#get-started"
-                            className="font-inter bg-brand-gradient group mt-6 inline-flex h-[42px] items-center gap-2 rounded-full pl-[5px] pr-5 text-[14px] font-medium text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.3)] transition-transform duration-500 hover:scale-[1.04] xl:mt-7 xl:h-[46px] xl:text-[15px] 2xl:h-[52px] 2xl:text-[16.5px]"
-                        >
-                            <span className="transition-transform duration-500 group-hover:rotate-45">
-                                <ArrowCircle className="h-[32px] w-[32px] xl:h-[36px] xl:w-[36px] 2xl:h-[42px] 2xl:w-[42px]" />
-                            </span>
-                            Get Started
-                        </a>
-                    </motion.div>
-
-                    <motion.div variants={col}>
-                        <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Quick Links</h3>
-                        <ul className="font-inter mt-3 flex flex-col gap-2 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
-                            {quicklinks.map((l) => (
-                                <li key={l.label}>
-                                    <FooterLink href={l.href}>{l.label}</FooterLink>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-
-                    <motion.div variants={col} className="col-span-2 order-last md:order-none md:col-span-1">
-                        <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Services</h3>
-                        <ul className="font-inter mt-3 flex flex-col gap-2 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
-                            {services.map((s) => (
-                                <li key={s}>
-                                    <FooterLink href="#services">{s}</FooterLink>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-
-                    <motion.div variants={col}>
-                        <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Contact</h3>
-                        <ul className="font-inter mt-3 flex flex-col gap-2.5 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
-                            <li>
-                                <a href="tel:+11234567890" className="group flex items-center gap-2 text-[#3f4650] transition-colors hover:text-[#1f9c80]">
-                                    <PhoneIcon />
-                                    (123) 456-7890
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto:info@loremipsum.com" className="group flex items-center gap-2 break-all text-[#3f4650] transition-colors hover:text-[#1f9c80]">
-                                    <MailIcon />
-                                    info@loremipsum.com
-                                </a>
-                            </li>
-                        </ul>
-                    </motion.div>
-                </div>
-
-                <motion.p
-                    variants={col}
-                    className="font-inter mt-12 max-w-[820px] text-[12.5px] leading-[1.65] text-[#4a5058] lg:mt-12 xl:text-[13px] 2xl:text-[14.5px]"
-                >
-                    We are dedicated to empowering authors worldwide by transforming manuscripts into published works. From professional editing and custom cover design to global distribution and marketing strategies, our team provides all the tools and guidance you need to bring your vision to readers everywhere.
-                </motion.p>
+        <>
+            <footer className="relative isolate w-full overflow-hidden pt-14 sm:pt-16 lg:pt-16 2xl:pt-20">
+                <Rays />
 
                 <motion.div
-                    variants={col}
-                    className="font-inter mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#0f3d34]/10 py-6 text-[12.5px] font-medium text-[#141414] sm:flex-row sm:border-t-0 sm:pt-4 xl:text-[13.5px] 2xl:py-8 2xl:text-[15px]"
+                    variants={cols}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-40px" }}
+                    className="mx-auto w-full max-w-[1000px] px-5 sm:px-8 lg:px-6 xl:max-w-[1080px] 2xl:max-w-[1280px]"
                 >
-                    <p>© {year} Copyright All Rights Reserved.</p>
-                    <p className="flex items-center gap-1.5">
-                        <a href="#terms" className="transition-colors hover:text-[#1f9c80]">
-                            Terms &amp; Conditions
-                        </a>
-                        <span>|</span>
-                        <a href="#privacy" className="transition-colors hover:text-[#1f9c80]">
-                            Privacy Policy
-                        </a>
-                    </p>
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.35fr_0.55fr_1.15fr_0.95fr] lg:gap-x-8">
+                        <motion.div variants={col} className="col-span-2 md:col-span-3 lg:col-span-1">
+                            <h2 className="font-clash text-[30px] leading-[1.15] tracking-[-0.01em] text-[#141414] sm:text-[34px] lg:text-[32px] xl:text-[36px] 2xl:text-[44px]">
+                                <span className="block font-normal">Your Story</span>
+                                <span className="text-brand-gradient font-medium">Deserves</span>
+                                <span className="font-normal"> to Soar</span>
+                            </h2>
+                            <button
+                                type="button"
+                                onClick={() => setQuoteOpen(true)}
+                                className="font-inter bg-brand-gradient group mt-6 inline-flex h-[42px] items-center gap-2 rounded-full pl-[5px] pr-5 text-[14px] font-medium text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.3)] transition-transform duration-500 hover:scale-[1.04] xl:mt-7 xl:h-[46px] xl:text-[15px] 2xl:h-[52px] 2xl:text-[16.5px]"
+                            >
+                                <span className="transition-transform duration-500 group-hover:rotate-45">
+                                    <ArrowCircle className="h-[32px] w-[32px] xl:h-[36px] xl:w-[36px] 2xl:h-[42px] 2xl:w-[42px]" />
+                                </span>
+                                Get Started
+                            </button>
+                        </motion.div>
+
+                        <motion.div variants={col}>
+                            <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Quick Links</h3>
+                            <ul className="font-inter mt-3 flex flex-col gap-2 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
+                                {quicklinks.map((l) => (
+                                    <li key={l.label}>
+                                        <FooterLink href={l.href}>{l.label}</FooterLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+
+                        <motion.div variants={col} className="col-span-2 order-last md:order-none md:col-span-1">
+                            <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Services</h3>
+                            <ul className="font-inter mt-3 flex flex-col gap-2 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
+                                {services.map((s) => (
+                                    <li key={s}>
+                                        <FooterLink href="#services">{s}</FooterLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+
+                        <motion.div variants={col}>
+                            <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Contact</h3>
+                            <ul className="font-inter mt-3 flex flex-col gap-2.5 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
+                                <li>
+                                    <a href="tel:+17282216606" className="group flex items-center gap-2 text-[#3f4650] transition-colors hover:text-[#1f9c80]">
+                                        <PhoneIcon />
+                                        (728) 221-6606
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="mailto:support@spinepublications.com" className="group flex items-center gap-2 break-all text-[#3f4650] transition-colors hover:text-[#1f9c80]">
+                                        <MailIcon />
+                                        support@spinepublications.com
+                                    </a>
+                                </li>
+                            </ul>
+                        </motion.div>
+                    </div>
+
+                    <motion.p
+                        variants={col}
+                        className="font-inter mt-12 max-w-[820px] text-[12.5px] leading-[1.65] text-[#4a5058] lg:mt-12 xl:text-[13px] 2xl:text-[14.5px]"
+                    >
+                        We are dedicated to empowering authors worldwide by transforming manuscripts into published works. From professional editing and custom cover design to global distribution and marketing strategies, our team provides all the tools and guidance you need to bring your vision to readers everywhere.
+                    </motion.p>
+
+                    <motion.div
+                        variants={col}
+                        role="note"
+                        aria-label="Disclaimer"
+                        className="mt-6 rounded-[14px] border border-white/70 bg-white/55 p-4 shadow-[0_6px_24px_rgba(15,61,52,0.06)] backdrop-blur-md sm:p-5 xl:mt-7 2xl:p-6"
+                    >
+                        <p className="font-clash flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.08em] text-[#13866a] xl:text-[13.5px] 2xl:text-[15px]">
+                            <InfoIcon />
+                            Disclaimer
+                        </p>
+                        <p className="font-inter mt-2 text-[12px] leading-[1.7] text-[#4a5058] xl:text-[12.5px] 2xl:text-[14px]">{disclaimer}</p>
+                    </motion.div>
+
+                    <motion.div
+                        variants={col}
+                        className="font-inter mt-8 flex flex-col items-center justify-between gap-3 border-t border-[#0f3d34]/10 py-6 text-[12.5px] font-medium text-[#141414] sm:flex-row sm:border-t-0 sm:pt-4 xl:text-[13.5px] 2xl:py-8 2xl:text-[15px]"
+                    >
+                        <p>© {year} Spine Publications. All Rights Reserved.</p>
+                        <p className="flex items-center gap-1.5">
+                            <a href="/terms" className="transition-colors hover:text-[#1f9c80]">
+                                Terms &amp; Conditions
+                            </a>
+                            <span>|</span>
+                            <a href="/privacy" className="transition-colors hover:text-[#1f9c80]">
+                                Privacy Policy
+                            </a>
+                        </p>
+                    </motion.div>
                 </motion.div>
-            </motion.div>
-        </footer>
+            </footer>
+
+            <QuoteModal open={quoteOpen} onClose={() => setQuoteOpen(false)} />
+        </>
     );
 };
 

@@ -14,11 +14,12 @@ const smooth: Easing = [0.16, 1, 0.3, 1];
 
 type Book = { src: string; alt: string };
 
-const books: Book[] = [
-    { src: "/images/Global1.png", alt: "Can God Trust You With His Reputation? by Dr. Eileen Anderson" },
-    { src: "/images/Global2.png", alt: "The Man from St. Claus by Michael R. Ashmore" },
-    { src: "/images/Global3.png", alt: "Conversations With My Dead Husband by Catherine Napoli Bruce" },
-];
+const BOOK_COUNT = 10;
+
+const books: Book[] = Array.from({ length: BOOK_COUNT }, (_, i) => {
+    const no = String(i + 1).padStart(2, "0");
+    return { src: `/images/Portfolio/${no}.png`, alt: `Book published with Spines ${i + 1}` };
+});
 
 const AUTOPLAY_MS = 4200;
 const BOOK_RATIO = 1887 / 1184;
@@ -68,6 +69,15 @@ const useLayout = () => {
     return layout;
 };
 
+const BookImage = ({ src, alt }: { src: string; alt: string }) => (
+    <img
+        src={src}
+        alt={alt}
+        draggable={false}
+        className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain drop-shadow-[0_18px_30px_rgba(20,30,40,0.22)]"
+    />
+);
+
 const BookCover = ({ src, alt, active, index }: { src: string; alt: string; active: boolean; index: number }) => {
     const ref = useRef<HTMLDivElement>(null);
     const mx = useMotionValue(0);
@@ -108,13 +118,7 @@ const BookCover = ({ src, alt, active, index }: { src: string; alt: string; acti
                     style={{ rotateX, rotateY, transformStyle: "preserve-3d", aspectRatio: "1184 / 1887" }}
                     className="relative w-full"
                 >
-                    <img
-                        src={src}
-                        alt={alt}
-                        draggable={false}
-                        className="pointer-events-none absolute max-w-none select-none"
-                        style={{ left: "-120.9%", top: "-25.3%", width: "345.9%" }}
-                    />
+                    <BookImage src={src} alt={alt} />
                 </motion.div>
             </motion.div>
         </div>
@@ -181,8 +185,8 @@ const NavButton = ({ dir, onClick }: { dir: "prev" | "next"; onClick: () => void
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         className={`flex h-[42px] w-[42px] items-center justify-center rounded-full outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#40C1AC] focus-visible:ring-offset-2 xl:h-[46px] xl:w-[46px] 2xl:h-[52px] 2xl:w-[52px] ${dir === "next"
-            ? "bg-brand-gradient text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.35)]"
-            : "bg-white text-[#2a9a76] ring-1 ring-[#40C1AC]/40 hover:shadow-[0_8px_22px_rgba(64,193,172,0.2)]"
+                ? "bg-brand-gradient text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.35)]"
+                : "bg-white text-[#2a9a76] ring-1 ring-[#40C1AC]/40 hover:shadow-[0_8px_22px_rgba(64,193,172,0.2)]"
             }`}
     >
         <svg viewBox="0 0 24 24" fill="none" className="h-[45%] w-[45%]" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -217,11 +221,11 @@ const GlobalAudience = () => {
     }, []);
 
     useEffect(() => {
-        slides.forEach((b) => {
+        books.forEach((b) => {
             const img = new Image();
             img.src = b.src;
         });
-    }, [slides]);
+    }, []);
 
     const go = useCallback((d: number) => setActive((a) => (a + d + total) % total), [total]);
 
@@ -327,19 +331,19 @@ const GlobalAudience = () => {
                     ))}
                 </motion.div>
 
-                <div className="mt-4 flex items-center justify-center gap-5 sm:mt-6 xl:mt-8">
+                <div className="mt-4 flex items-center justify-center gap-4 sm:mt-6 sm:gap-5 xl:mt-8">
                     <NavButton dir="prev" onClick={() => go(-1)} />
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                         {books.map((b, i) => (
                             <button
-                                key={b.alt}
+                                key={b.src}
                                 type="button"
                                 aria-label={`Show ${b.alt}`}
                                 aria-current={i === realActive}
                                 onClick={() => goToReal(i)}
                                 className="relative h-[8px] overflow-hidden rounded-full bg-[#dff5ee] outline-none focus-visible:ring-2 focus-visible:ring-[#40C1AC]"
-                                style={{ width: i === realActive ? 34 : 8, transition: "width 0.6s cubic-bezier(0.16,1,0.3,1)" }}
+                                style={{ width: i === realActive ? 30 : 8, transition: "width 0.6s cubic-bezier(0.16,1,0.3,1)" }}
                             >
                                 {i === realActive && (
                                     <motion.span

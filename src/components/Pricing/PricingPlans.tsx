@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, animate, motion, useInView, type Easing, type Variants } from "framer-motion";
+import QuoteModal, { type QuotePlan } from "../QuoteModal";
 
 const smooth: Easing = [0.16, 1, 0.3, 1];
 
@@ -12,7 +13,6 @@ type Plan = {
     features: Feature[];
     image: string;
     imageAlt: string;
-    href: string;
     popular?: boolean;
 };
 
@@ -22,31 +22,29 @@ const plans: Plan[] = [
         price: 1499,
         formats: "Paperback & eBook Publishing",
         features: [
-            { text: "Paperback & e-book publishing", tip: "Your book released in paperback and eBook formats on major retailers." },
-            { text: "Cover & interior design", tip: "A professional cover and a clean, print-ready interior layout." },
-            { text: "Light Copyediting", tip: "A careful pass for grammar, spelling, and punctuation." },
-            { text: "Book Discovery Plan & Book Launch Plan", tip: "A step-by-step plan to help readers find your book at launch." },
-            { text: "Access to Author Learning Center", tip: "Guides, videos, and resources to grow as a published author." },
+            { text: "Complete Paperback & Digital eBook Publishing", tip: "Your book published in paperback and digital eBook formats." },
+            { text: "Custom Cover Design & Interior Page Formatting", tip: "Custom cover artwork and professionally formatted interior pages." },
+            { text: "Professional Light Copyediting Support", tip: "Light copyediting support for grammar, spelling, and clarity." },
+            { text: "Strategic Book Discovery & Launch Strategy Roadmap", tip: "A roadmap to help readers discover your book and support its launch." },
+            { text: "Exclusive Access to the Spines Author Learning Center", tip: "Access learning resources designed to support your author journey." },
         ],
         image: "/images/pricing-essentials.png",
-        imageAlt: "Laptop showing Kindle Direct Publishing next to a stack of books",
-        href: "#select-essentials",
+        imageAlt: "Laptop showing a publishing dashboard next to a stack of books",
     },
     {
         name: "Balance",
         price: 3294,
         formats: "Hardcover, Paperback & eBook Publishing",
         features: [
-            { text: "Everything from Essentials", plus: true, tip: "All features of the Essentials plan are included." },
-            { text: "Hardcover publishing", tip: "Add a premium hardcover edition of your book." },
-            { text: "Front & Back Cover Copy Polish", tip: "Professional editing of your book's cover and back-cover copy." },
-            { text: "Library of Congress Control Number", tip: "An LCCN so libraries can catalog your book." },
-            { text: "Booksellers Return Program", tip: "Makes your book returnable, so bookstores are more willing to stock it." },
-            { text: "Author Website", tip: "A simple, professional website to showcase you and your book." },
+            { text: "Everything included in Essentials, plus:", plus: true, tip: "Includes all Essentials features, along with the additional features below." },
+            { text: "Premium Hardcover Edition Publishing", tip: "Add a premium hardcover edition to your publishing package." },
+            { text: "Professional Front & Back Cover Copy Refinement", tip: "Refine your front and back cover copy with professional support." },
+            { text: "Library of Congress Control Number (LCCN) Registration", tip: "Support with Library of Congress Control Number registration." },
+            { text: "Booksellers Return Program for Bookstore Pitching", tip: "Support for pitching your book to booksellers through a return program." },
+            { text: "Fully Customized Author Website", tip: "A customized website to present you and your books online." },
         ],
         image: "/images/pricing-balance.png",
-        imageAlt: "Three fantasy book covers side by side",
-        href: "#select-balance",
+        imageAlt: "A collection of book covers representing a published author catalogue",
         popular: true,
     },
     {
@@ -54,17 +52,16 @@ const plans: Plan[] = [
         price: 7589,
         formats: "Hardcover, Paperback, Audiobook & eBook Publishing",
         features: [
-            { text: "Everything from Balance", plus: true, tip: "All features of the Balance plan are included." },
-            { text: "Audiobook publishing (DIY)", tip: "Tools and guidance to record and publish your own audiobook." },
-            { text: "Proofreading", tip: "A final, detailed proofread before your book goes to print." },
-            { text: "US Copyright Registration", tip: "We register your book with the U.S. Copyright Office for you." },
-            { text: "Custom Press Release", tip: "A professionally written press release announcing your book." },
-            { text: "Podcast Interview", tip: "A podcast interview to introduce you and your book to new listeners." },
-            { text: "Audience Builder Starter Kit", tip: "Templates and tools to start building your reader community." },
+            { text: "Everything included in Balance, plus:", plus: true, tip: "Includes all Balance features, along with the additional features below." },
+            { text: "Complete Audiobook Production & Distribution Support", tip: "Support for audiobook production and distribution." },
+            { text: "Comprehensive Line Proofreading & Polish", tip: "A detailed proofreading pass to polish the manuscript." },
+            { text: "Official US Copyright Registration Service", tip: "Support with official U.S. copyright registration." },
+            { text: "Custom Press Release Creation & Media Distribution", tip: "A custom press release prepared for media distribution." },
+            { text: "Guaranteed Featured Podcast Interview", tip: "A featured podcast interview to introduce you and your book to listeners." },
+            { text: "Complete Audience Builder Marketing Starter Kit", tip: "Starter resources to help build and engage your readership." },
         ],
         image: "/images/pricing-momentum.png",
-        imageAlt: "Self publishing book on a desk next to a laptop and lamp",
-        href: "#select-momentum",
+        imageAlt: "A book publishing workspace with a book, laptop, and desk lamp",
     },
 ];
 
@@ -151,7 +148,7 @@ const Tip = ({ text }: { text: string }) => {
     );
 };
 
-const PlanCard = ({ plan }: { plan: Plan }) => (
+const PlanCard = ({ plan, onSelect }: { plan: Plan; onSelect: (plan: Plan) => void }) => (
     <motion.article
         variants={cardV}
         whileHover={{ y: -8 }}
@@ -187,10 +184,9 @@ const PlanCard = ({ plan }: { plan: Plan }) => (
                 <motion.li
                     key={f.text}
                     variants={listItem}
-                    className="font-inter text-[12.5px] leading-[1.5] text-[#2d343c] xl:text-[13.5px] 2xl:text-[15px]"
+                    className={`font-inter text-[12.5px] leading-[1.5] text-[#2d343c] xl:text-[13.5px] 2xl:text-[15px] ${f.plus ? "font-semibold italic" : ""}`}
                 >
                     {f.text}
-                    {f.plus && <em className="ml-1 font-semibold">plus</em>}
                     <Tip text={f.tip} />
                 </motion.li>
             ))}
@@ -199,15 +195,17 @@ const PlanCard = ({ plan }: { plan: Plan }) => (
         <div className="mx-1 my-4 h-px bg-[#e3e6ea] xl:my-5" />
 
         <div className="px-1">
-            <a
-                href={plan.href}
-                className="font-inter bg-brand-gradient group/btn inline-flex h-[26px] w-[110px] items-center justify-between rounded-full pl-3 pr-2.5 text-[11px] font-semibold text-[#0f3d34] shadow-[0_6px_16px_rgba(4,221,166,0.28)] transition-[width,box-shadow] duration-500 hover:w-[128px] hover:shadow-[0_8px_22px_rgba(4,221,166,0.4)] xl:h-[30px] xl:w-[124px] xl:text-[12px] xl:hover:w-[142px] 2xl:h-[36px] 2xl:w-[150px] 2xl:text-[14px] 2xl:hover:w-[170px]"
+            <button
+                type="button"
+                onClick={() => onSelect(plan)}
+                aria-label={`Select the ${plan.name} plan`}
+                className="font-inter bg-brand-gradient group/btn inline-flex h-[26px] w-[110px] items-center justify-between rounded-full pl-3 pr-2.5 text-[11px] font-semibold text-[#0f3d34] shadow-[0_6px_16px_rgba(4,221,166,0.28)] outline-none transition-[width,box-shadow] duration-500 hover:w-[128px] hover:shadow-[0_8px_22px_rgba(4,221,166,0.4)] focus-visible:ring-2 focus-visible:ring-[#40C1AC] focus-visible:ring-offset-2 xl:h-[30px] xl:w-[124px] xl:text-[12px] xl:hover:w-[142px] 2xl:h-[36px] 2xl:w-[150px] 2xl:text-[14px] 2xl:hover:w-[170px]"
             >
-                Select
+                Select Plan
                 <svg viewBox="0 0 24 24" className="h-[12px] w-[12px] transition-transform duration-500 group-hover/btn:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 6l6 6-6 6" />
                 </svg>
-            </a>
+            </button>
         </div>
 
         <div className="relative mt-4 aspect-[186/93] overflow-hidden rounded-[4px] bg-[#eef3f1] xl:mt-5">
@@ -223,69 +221,80 @@ const PlanCard = ({ plan }: { plan: Plan }) => (
 );
 
 const PricingPlans = () => {
-    return (
-        <section id="pricing" className="relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-24 2xl:py-32">
-            <div className="mx-auto w-full max-w-[920px] px-5 sm:px-8 lg:px-6 xl:max-w-[1040px] 2xl:max-w-[1240px]">
-                <div className="flex flex-col items-center text-center">
-                    <motion.span
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: smooth }}
-                        className="bg-brand-gradient font-inter inline-flex h-[24px] items-center rounded-full px-[18px] text-[11.5px] font-medium text-[#0f3d34] xl:h-[26px] xl:text-[12.5px] 2xl:h-[28px] 2xl:text-[13.5px]"
-                    >
-                        Pricing Plans
-                    </motion.span>
+    const [quoteOpen, setQuoteOpen] = useState(false);
+    const [selectedPlan, setSelectedPlan] = useState<QuotePlan | null>(null);
 
-                    <motion.h2
-                        variants={words}
+    const handleSelect = (plan: Plan) => {
+        setSelectedPlan({ name: plan.name, price: plan.price, formats: plan.formats });
+        setQuoteOpen(true);
+    };
+
+    return (
+        <>
+            <section id="pricing" className="relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-24 2xl:py-32">
+                <div className="mx-auto w-full max-w-[920px] px-5 sm:px-8 lg:px-6 xl:max-w-[1040px] 2xl:max-w-[1240px]">
+                    <div className="flex flex-col items-center text-center">
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, ease: smooth }}
+                            className="bg-brand-gradient font-inter mt-14 inline-flex h-[24px] items-center rounded-full px-[18px] text-[11.5px] font-medium text-[#0f3d34] xl:h-[26px] xl:text-[12.5px]"
+                        >
+                            Did You Know
+                        </motion.span>
+
+                        <motion.h2
+                            variants={words}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, margin: "-60px" }}
+                            className="font-clash mt-3 max-w-4xl text-[27px] leading-[1.15] tracking-[-0.01em] text-[#1d2a30] sm:text-[32px] lg:text-[34px] xl:text-[38px]"
+                        >
+                            {"Select the Ideal Spines Publication Package".split(" ").map((w, i) => (
+                                <motion.span key={`package-a${i}`} variants={word} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
+                                    {w}
+                                </motion.span>
+                            ))}
+                            {"for Your Vision".split(" ").map((w, i, arr) => (
+                                <motion.span key={`package-b${i}`} variants={word} className={`inline-block font-normal ${i < arr.length - 1 ? "mr-[0.25em]" : ""}`}>
+                                    {w}
+                                </motion.span>
+                            ))}
+                        </motion.h2>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.1, delay: 0.3, ease: smooth }}
+                            className="font-inter mt-3 max-w-[680px] text-[12.5px] leading-[1.7] text-[#5a5f66] xl:text-[14px] 2xl:text-[15px]"
+                        >
+                            We handle the heavy lifting and technical complexities of book creation so you can focus on writing, knowing your project is guided by industry professionals.
+                        </motion.p>
+                    </div>
+                    <motion.div
+                        id="pricing-plans"
+                        variants={cards}
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, margin: "-60px" }}
-                        className="font-clash mt-3 text-[27px] leading-[1.15] tracking-[-0.01em] text-[#1d2a30] sm:text-[32px] lg:text-[34px] xl:text-[38px] 2xl:text-[46px]"
+                        className="mx-auto mt-8 grid max-w-[420px] grid-cols-1 items-start gap-6 sm:mt-10 md:max-w-none md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-5 2xl:gap-6"
                     >
-                        {"Choose the plan".split(" ").map((w, i) => (
-                            <motion.span key={`a${i}`} variants={word} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
-                                {w}
-                            </motion.span>
+                        {plans.map((p, i) => (
+                            <div
+                                key={p.name}
+                                className={i === plans.length - 1 ? "md:col-span-2 md:mx-auto md:w-[calc(50%-12px)] lg:col-span-1 lg:w-auto" : ""}
+                            >
+                                <PlanCard plan={p} onSelect={handleSelect} />
+                            </div>
                         ))}
-                        {"built for your goals.".split(" ").map((w, i, arr) => (
-                            <motion.span key={`b${i}`} variants={word} className={`inline-block font-normal ${i < arr.length - 1 ? "mr-[0.25em]" : ""}`}>
-                                {w}
-                            </motion.span>
-                        ))}
-                    </motion.h2>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.1, delay: 0.4, ease: smooth }}
-                        className="font-inter mt-3 max-w-[520px] text-[12.5px] leading-[1.7] text-[#5a5f66] xl:max-w-[580px] xl:text-[14px] 2xl:max-w-[680px] 2xl:text-[16px]"
-                    >
-                        We manage the technical details of the publishing process so you can focus on your message, knowing your
-                        book is built with care and experienced guidance.
-                    </motion.p>
+                    </motion.div>
                 </div>
+            </section>
 
-                <motion.div
-                    variants={cards}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-60px" }}
-                    className="mx-auto mt-8 grid max-w-[420px] grid-cols-1 items-start gap-6 sm:mt-10 md:max-w-none md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-5 2xl:gap-6"
-                >
-                    {plans.map((p, i) => (
-                        <div
-                            key={p.name}
-                            className={i === plans.length - 1 ? "md:col-span-2 md:mx-auto md:w-[calc(50%-12px)] lg:col-span-1 lg:w-auto" : ""}
-                        >
-                            <PlanCard plan={p} />
-                        </div>
-                    ))}
-                </motion.div>
-            </div>
-        </section>
+            <QuoteModal open={quoteOpen} onClose={() => setQuoteOpen(false)} plan={selectedPlan} />
+        </>
     );
 };
 

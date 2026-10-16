@@ -1,7 +1,8 @@
 import { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { AnimatePresence, motion, type Easing, type Variants } from "framer-motion";
 import { ArrowCircle } from "../Navbar";
-
+import QuoteModal from "../QuoteModal";
+import { submitLead } from "../../lib/submitLead";
 
 const smooth: Easing = [0.16, 1, 0.3, 1];
 
@@ -24,9 +25,9 @@ const MailIcon = () => (
 );
 
 const contacts: { icon: ReactNode; label: string; href?: string }[] = [
-    { icon: <PhoneIcon />, label: "(217) 555-0113", href: "tel:+12175550113" },
-    { icon: <PinIcon />, label: "Lorem Ipsum is simply dummy text of the printing" },
-    { icon: <MailIcon />, label: "info@loremsite.com", href: "mailto:info@loremsite.com" },
+    { icon: <PhoneIcon />, label: "(728) 221-6606", href: "tel:+17282216606" },
+    { icon: <PinIcon />, label: "4781 N Congress Ave, Boynton Beach, FL 33426" },
+    { icon: <MailIcon />, label: "support@spinepublications.com", href: "mailto:support@spinepublications.com" },
 ];
 
 const words: Variants = {
@@ -71,6 +72,7 @@ const SplitWords = ({ text, className }: { text: string; className?: string }) =
 
 type FormState = { name: string; email: string; phone: string; message: string; consent: boolean };
 type Errors = Partial<Record<keyof FormState, string>>;
+type Status = "idle" | "sending" | "sent" | "error";
 
 const initialForm: FormState = { name: "", email: "", phone: "", message: "", consent: false };
 
@@ -78,7 +80,7 @@ const validate = (f: FormState): Errors => {
     const e: Errors = {};
     if (!f.name.trim()) e.name = "Please enter your full name";
     if (!f.email.trim()) e.email = "Please enter your email";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = "Please enter a valid email";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = "Please enter a valid email";
     if (!f.phone.trim()) e.phone = "Please enter your contact number";
     else if (f.phone.replace(/\D/g, "").length < 7) e.phone = "Please enter a valid number";
     if (!f.consent) e.consent = "Please accept to continue";
@@ -110,23 +112,38 @@ const Field = ({ error, children }: { error?: string; children: ReactNode }) => 
 const QuoteForm = () => {
     const [form, setForm] = useState<FormState>(initialForm);
     const [errors, setErrors] = useState<Errors>({});
-    const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+    const [status, setStatus] = useState<Status>("idle");
+    const [serverError, setServerError] = useState("");
 
     const onChange = (key: keyof FormState) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = key === "consent" ? (e.target as HTMLInputElement).checked : e.target.value;
         setForm((f) => ({ ...f, [key]: value }));
         if (errors[key]) setErrors((er) => ({ ...er, [key]: undefined }));
+        if (status === "error") {
+            setStatus("idle");
+            setServerError("");
+        }
     };
 
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        if (status === "sending") return;
+
         const found = validate(form);
         setErrors(found);
         if (Object.keys(found).length) return;
+
         setStatus("sending");
-        await new Promise((r) => setTimeout(r, 1400));
-        setStatus("sent");
-        setForm(initialForm);
+        setServerError("");
+
+        try {
+            await submitLead(form);
+            setStatus("sent");
+            setForm(initialForm);
+        } catch (err) {
+            setStatus("error");
+            setServerError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+        }
     };
 
     const border = (key: keyof FormState) => (errors[key] ? "border-[#7a1020]/70" : "border-transparent");
@@ -195,10 +212,10 @@ const QuoteForm = () => {
                         viewport={{ once: true }}
                     >
                         <motion.h3 variants={formField} className="font-clash text-[21px] font-semibold text-[#0f1f1b] sm:text-[23px] xl:text-[25px] 2xl:text-[29px]">
-                            Get Your Free Quote
+                            Get Your Free Publishing Quote
                         </motion.h3>
                         <motion.p variants={formField} className="font-inter mt-1 text-[12px] text-[#0f2d27] xl:text-[13px] 2xl:text-[14.5px]">
-                            Share your vision with our experts!
+                            Share your manuscript details with Spines specialists!
                         </motion.p>
 
                         <div className="mt-5 flex flex-col gap-3 xl:mt-6">
@@ -243,7 +260,7 @@ const QuoteForm = () => {
                                 <textarea
                                     id="q-message"
                                     rows={4}
-                                    placeholder="Tell us about your book concept"
+                                    placeholder="Tell us about your book concept (Genre, Word Count, Goals)"
                                     value={form.message}
                                     onChange={onChange("message")}
                                     className={`${inputBase} border-transparent resize-none py-3 h-[100px] xl:h-[112px] 2xl:h-[130px]`}
@@ -265,13 +282,27 @@ const QuoteForm = () => {
                                     </svg>
                                 </span>
                                 <span className="font-inter text-[11px] leading-[1.5] text-[#0f2d27] xl:text-[11.5px] 2xl:text-[13px]">
-                                    By submitting this form and providing your phone number, you agree to receive automated messages
-                                    from us and accept our{" "}
+                                    By submitting this form and providing your phone number, you agree to receive automated project updates from Spines and accept our{" "}
                                     <a href="/terms" className="underline-offset-2 hover:underline">Terms</a> and{" "}
                                     <a href="/privacy" className="underline-offset-2 hover:underline">Privacy Policy</a>.
                                 </span>
                             </label>
                         </Field>
+
+                        <AnimatePresence>
+                            {status === "error" && serverError && (
+                                <motion.div
+                                    role="alert"
+                                    initial={{ opacity: 0, y: -6, height: 0 }}
+                                    animate={{ opacity: 1, y: 0, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.35, ease: smooth }}
+                                    className="font-inter mt-4 rounded-[8px] bg-white/60 px-4 py-3 text-[12.5px] font-medium text-[#7a1020] ring-1 ring-[#7a1020]/20 xl:text-[13.5px]"
+                                >
+                                    {serverError}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         <motion.button
                             variants={formField}
@@ -291,7 +322,7 @@ const QuoteForm = () => {
                                     Sending...
                                 </>
                             ) : (
-                                "Get Started"
+                                "Submit Inquiry"
                             )}
                         </motion.button>
                     </motion.form>
@@ -302,111 +333,115 @@ const QuoteForm = () => {
 };
 
 const ContactSection = () => {
+    const [quoteOpen, setQuoteOpen] = useState(false);
+
     return (
-        <section id="contact" className="relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-24 2xl:py-32">
-            <div className="mx-auto w-full max-w-[1000px] px-5 sm:px-8 lg:px-6 xl:max-w-[1120px] 2xl:max-w-[1320px]">
-                <div className="flex flex-col items-center text-center">
-                    <motion.h2
-                        variants={words}
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true, margin: "-60px" }}
-                        className="font-clash leading-[1.15] tracking-[-0.01em]"
-                    >
-                        <span className="block text-[30px] font-semibold sm:text-[38px] lg:text-[42px] xl:text-[48px] 2xl:text-[58px]">
-                            <SplitWords text="Get in Touch:" className="text-brand-gradient" />
-                        </span>
-                        <span className="mt-1 block text-[24px] font-normal text-[#1c1c1c] sm:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[50px]">
-                            <SplitWords text="Swift Support Just a Click Away" />
-                        </span>
-                    </motion.h2>
+        <>
+            <section id="contact" className="relative w-full overflow-hidden bg-white py-16 sm:py-20 lg:py-24 2xl:py-32">
+                <div className="mx-auto w-full max-w-[1000px] px-5 sm:px-8 lg:px-6 xl:max-w-[1120px] 2xl:max-w-[1320px]">
+                    <div className="flex flex-col items-center text-center">
+                        <motion.h2
+                            variants={words}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, margin: "-60px" }}
+                            className="font-clash leading-[1.15] tracking-[-0.01em]"
+                        >
+                            <span className="block text-[30px] font-semibold sm:text-[38px] lg:text-[42px] xl:text-[48px] 2xl:text-[58px]">
+                                <SplitWords text="Connect with Spines:" className="text-brand-gradient" />
+                            </span>
+                            <span className="mt-1 block text-[24px] font-normal text-[#1c1c1c] sm:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[50px]">
+                                <SplitWords text="Expert Author Support is Just a Message Away" />
+                            </span>
+                        </motion.h2>
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.1, delay: 0.4, ease: smooth }}
-                        className="font-inter mt-4 max-w-[560px] text-[13px] leading-[1.7] text-[#5a5f66] lg:max-w-[600px] xl:max-w-[660px] xl:text-[14px] 2xl:max-w-[760px] 2xl:text-[16px]"
-                    >
-                        We can't wait to hear from you! If you have questions about our services, suggestions for improvements, or
-                        just want to say hello, we're here for you. Reach out to us by phone or email, and thank you for visiting
-                        our site!
-                    </motion.p>
-                </div>
-
-                <motion.ul
-                    variants={contactList}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-40px" }}
-                    className="mt-9 grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-4 lg:mt-10 xl:mt-12"
-                >
-                    {contacts.map((c) => {
-                        const content = (
-                            <>
-                                <motion.span
-                                    whileHover={{ y: -4, scale: 1.1 }}
-                                    transition={{ duration: 0.4, ease: smooth }}
-                                    className="block h-[26px] w-[26px] text-[#1fc79d] xl:h-[30px] xl:w-[30px] 2xl:h-[34px] 2xl:w-[34px]"
-                                >
-                                    {c.icon}
-                                </motion.span>
-                                <span className="font-inter mt-3 max-w-[300px] text-[14px] leading-[1.45] text-[#1d2328] transition-colors duration-300 group-hover:text-[#1f9c80] xl:text-[15px] 2xl:text-[17px]">
-                                    {c.label}
-                                </span>
-                            </>
-                        );
-                        return (
-                            <motion.li key={c.label} variants={contactItem} className="flex justify-center">
-                                {c.href ? (
-                                    <a href={c.href} className="group flex flex-col items-center text-center">
-                                        {content}
-                                    </a>
-                                ) : (
-                                    <div className="group flex flex-col items-center text-center">{content}</div>
-                                )}
-                            </motion.li>
-                        );
-                    })}
-                </motion.ul>
-
-                <div className="mt-12 grid grid-cols-1 items-center gap-12 sm:mt-14 lg:mt-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 xl:gap-16">
-                    <div className="mx-auto w-full max-w-[480px] lg:mx-0 lg:max-w-none">
-                        <QuoteForm />
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.1, delay: 0.4, ease: smooth }}
+                            className="font-inter mt-4 max-w-[560px] text-[13px] leading-[1.7] text-[#5a5f66] lg:max-w-[600px] xl:max-w-[660px] xl:text-[14px] 2xl:max-w-[760px] 2xl:text-[16px]"
+                        >
+                            We are eager to hear about your book! Whether you have questions about our editing packages, distribution channels, or want to discuss a custom publishing plan, the Spines team is here to guide you every step of the way.
+                        </motion.p>
                     </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, x: 60 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-60px" }}
-                        transition={{ duration: 1.4, delay: 0.2, ease: smooth }}
-                        className="text-center lg:text-left"
+                    <motion.ul
+                        variants={contactList}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, margin: "-40px" }}
+                        className="mt-9 grid grid-cols-1 gap-7 sm:grid-cols-3 sm:gap-4 lg:mt-10 xl:mt-12"
                     >
-                        <h2 className="font-clash leading-[1.08] tracking-[-0.015em]">
-                            <span className="block text-[30px] font-normal text-[#1c1c1c] sm:text-[38px] lg:text-[40px] xl:text-[46px] 2xl:text-[56px]">
-                                Complete Book
-                            </span>
-                            <span className="text-brand-gradient mt-1 block text-[32px] font-semibold sm:text-[42px] lg:text-[44px] xl:text-[50px] 2xl:text-[62px]">
-                                Publishing Solutions
-                            </span>
-                        </h2>
-                        <p className="font-inter mx-auto mt-4 max-w-[420px] text-[13px] leading-[1.7] text-[#4b5058] lg:mx-0 xl:max-w-[460px] xl:text-[14px] 2xl:max-w-[540px] 2xl:text-[16px]">
-                            Discover our all-inclusive services that encompass every step of the book creation journey, from
-                            writing and editing to marketing and distribution.
-                        </p>
-                        <a
-                            href="#get-started"
-                            className="font-inter bg-brand-gradient group mt-5 inline-flex h-[40px] items-center gap-2 rounded-full pl-[5px] pr-5 text-[13.5px] font-medium text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.3)] transition-transform duration-500 hover:scale-[1.04] xl:mt-6 xl:h-[46px] xl:text-[15px] 2xl:h-[52px] 2xl:text-[16.5px]"
+                        {contacts.map((c) => {
+                            const content = (
+                                <>
+                                    <motion.span
+                                        whileHover={{ y: -4, scale: 1.1 }}
+                                        transition={{ duration: 0.4, ease: smooth }}
+                                        className="block h-[26px] w-[26px] text-[#1fc79d] xl:h-[30px] xl:w-[30px] 2xl:h-[34px] 2xl:w-[34px]"
+                                    >
+                                        {c.icon}
+                                    </motion.span>
+                                    <span className="font-inter mt-3 max-w-[300px] text-[14px] leading-[1.45] text-[#1d2328] transition-colors duration-300 group-hover:text-[#1f9c80] xl:text-[15px] 2xl:text-[17px]">
+                                        {c.label}
+                                    </span>
+                                </>
+                            );
+                            return (
+                                <motion.li key={c.label} variants={contactItem} className="flex justify-center">
+                                    {c.href ? (
+                                        <a href={c.href} className="group flex flex-col items-center text-center">
+                                            {content}
+                                        </a>
+                                    ) : (
+                                        <div className="group flex flex-col items-center text-center">{content}</div>
+                                    )}
+                                </motion.li>
+                            );
+                        })}
+                    </motion.ul>
+
+                    <div className="mt-12 grid grid-cols-1 items-center gap-12 sm:mt-14 lg:mt-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 xl:gap-16">
+                        <div className="mx-auto w-full max-w-[480px] lg:mx-0 lg:max-w-none">
+                            <QuoteForm />
+                        </div>
+
+                        <motion.div
+                            initial={{ opacity: 0, x: 60 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: "-60px" }}
+                            transition={{ duration: 1.4, delay: 0.2, ease: smooth }}
+                            className="text-center lg:text-left"
                         >
-                            <span className="transition-transform duration-500 group-hover:rotate-45">
-                                <ArrowCircle className="h-[30px] w-[30px] xl:h-[36px] xl:w-[36px] 2xl:h-[42px] 2xl:w-[42px]" />
-                            </span>
-                            Get Started
-                        </a>
-                    </motion.div>
+                            <h2 className="font-clash leading-[1.08] tracking-[-0.015em]">
+                                <span className="block text-[30px] font-normal text-[#1c1c1c] sm:text-[38px] lg:text-[40px] xl:text-[46px] 2xl:text-[56px]">
+                                    All-In-One Book
+                                </span>
+                                <span className="text-brand-gradient mt-1 block text-[32px] font-semibold sm:text-[42px] lg:text-[44px] xl:text-[50px] 2xl:text-[62px]">
+                                    Publishing Solutions
+                                </span>
+                            </h2>
+                            <p className="font-inter mx-auto mt-4 max-w-[420px] text-[13px] leading-[1.7] text-[#4b5058] lg:mx-0 xl:max-w-[460px] xl:text-[14px] 2xl:max-w-[540px] 2xl:text-[16px]">
+                                Experience a streamlined publishing process with Spines. From manuscript refinement and cover design to global distribution and marketing, we handle the complex technical details so you can share your voice with the world.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => setQuoteOpen(true)}
+                                className="font-inter bg-brand-gradient group mt-5 inline-flex h-[40px] items-center gap-2 rounded-full pl-[5px] pr-5 text-[13.5px] font-medium text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.3)] transition-transform duration-500 hover:scale-[1.04] xl:mt-6 xl:h-[46px] xl:text-[15px] 2xl:h-[52px] 2xl:text-[16.5px]"
+                            >
+                                <span className="transition-transform duration-500 group-hover:rotate-45">
+                                    <ArrowCircle className="h-[30px] w-[30px] xl:h-[36px] xl:w-[36px] 2xl:h-[42px] 2xl:w-[42px]" />
+                                </span>
+                                Get Started
+                            </button>
+                        </motion.div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <QuoteModal open={quoteOpen} onClose={() => setQuoteOpen(false)} />
+        </>
     );
 };
 

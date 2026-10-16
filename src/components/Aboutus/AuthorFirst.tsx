@@ -7,11 +7,11 @@ const horizontalImg = "/images/AboutHorizontal.png";
 const verticalImg = "/images/AboutVertical.png";
 
 const heading: { text: string; accent?: boolean; br?: boolean }[] = [
-    { text: "Because" },
-    { text: "Book Publishing", accent: true },
-    { text: "Should", br: true },
-    { text: "Be Built Around" },
-    { text: "The Author", accent: true },
+    { text: "Every" },
+    { text: "Author", accent: true },
+    { text: "Deserves", br: true },
+    { text: "a Seamless Path" },
+    { text: "to Publication", accent: true },
 ];
 
 const words: Variants = {
@@ -115,8 +115,9 @@ const AuthorFirst = () => {
                         {...fadeUp(0.35)}
                         className="font-inter max-w-[440px] text-[13.5px] leading-[1.75] text-[#4b5058] md:pt-1 lg:text-[14px] xl:max-w-[470px] xl:text-[15px] 2xl:max-w-[540px] 2xl:text-[17px]"
                     >
-                        Your story deserves more than a one-size-fits-all process. At Spines, every service is shaped around your
-                        goals, your voice, and your timeline, so the book that reaches readers is truly yours.
+                        Publishing a book shouldn’t mean surrendering creative freedom or wading through confusing industry red tape.
+                        At Spines, we built our platform to give authors complete ownership—combining professional publishing
+                        expertise with intuitive, tech-driven support.
                     </motion.p>
                 </div>
 
@@ -135,9 +136,9 @@ const AuthorFirst = () => {
                             {...fadeUp(0.3)}
                             className="font-inter mt-5 max-w-[640px] text-[13.5px] leading-[1.75] text-[#4b5058] lg:mt-6 lg:text-[14px] xl:text-[15px] 2xl:max-w-[760px] 2xl:text-[17px]"
                         >
-                            From the first draft to the bookstore shelf, our editors, designers, and marketers work alongside you as
-                            true partners. You keep full creative control and your rights, while we handle the details that turn a
-                            manuscript into a book readers can find, hold, and love, in print and digital formats around the world.
+                            Whether your goal is to see your physical book featured in local bookstores or topping global eBook
+                            bestseller lists, Spines provides the direct path from your draft to a worldwide audience. We streamline
+                            editing, design, and global distribution so you can focus entirely on telling your story.
                         </motion.p>
                     </div>
 

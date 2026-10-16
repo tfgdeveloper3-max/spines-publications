@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView, type Easing, type Variants } from "framer-motion";
 import { ArrowCircle } from "../Navbar";
-import { formatDate, getSummary, reviews } from "../../data/reviewsData";
 import RatingSummary from "./RatingSummary";
+import { formatDate, getSummary, reviews } from "../../data/reviewsData";
 import Stars from "./ReviewStars";
 
 
@@ -177,9 +177,19 @@ const ReviewsHero = ({ onWrite }: { onWrite: () => void }) => {
                                 </div>
                                 <p className="font-clash mt-3 text-[15.5px] font-semibold text-[#141414] xl:text-[17px]">{featured.title}</p>
                                 <p className="font-inter mt-1.5 line-clamp-3 text-[12.5px] leading-[1.65] text-[#3d434b] xl:text-[13.5px]">{featured.text}</p>
-                                <p className="font-inter mt-3 text-[12.5px] font-semibold text-[#141414]">
-                                    {featured.name} <span className="font-normal text-[#13866a]">· Verified</span>
-                                </p>
+                                <div className="mt-3 flex items-center gap-2.5">
+                                    {featured.avatar && (
+                                        <img
+                                            src={featured.avatar}
+                                            alt={featured.name}
+                                            draggable={false}
+                                            className="h-[30px] w-[30px] shrink-0 select-none rounded-full object-cover ring-2 ring-white shadow-[0_3px_10px_rgba(20,20,40,0.12)]"
+                                        />
+                                    )}
+                                    <p className="font-inter text-[12.5px] font-semibold text-[#141414]">
+                                        {featured.name} <span className="font-normal text-[#13866a]">· Verified</span>
+                                    </p>
+                                </div>
                             </motion.div>
                         </motion.div>
                     )}

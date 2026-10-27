@@ -58,7 +58,7 @@ const services: Service[] = [
     {
         icon: <RobotIcon />,
         title: "Multi-Format Publishing",
-        text: "Launch your book in paperback, hardcover, eBook, and audiobook formats simultaneously with Spines' seamless production engine.",
+        text: "Launch your book in paperback, hardcover, eBook, and audiobook formats simultaneously with Spine Publications' seamless production engine.",
         href: "#multi-format-publishing",
     },
     {
@@ -70,7 +70,7 @@ const services: Service[] = [
     {
         icon: <BrainGearIcon />,
         title: "Rights & Royalty Control",
-        text: "Keep 100% ownership of your copyright and intellectual property while tracking your live royalty earnings straight from your Spines dashboard.",
+        text: "Keep 100% ownership of your copyright and intellectual property while tracking your live royalty earnings straight from your Spine Publications dashboard.",
         href: "#rights-royalty-control",
     },
     {
@@ -82,7 +82,7 @@ const services: Service[] = [
     {
         icon: <BrainGearIcon />,
         title: "PR & Media Coverage",
-        text: "Expand your reach through professional press releases, podcast appearances, blog tours, and author platform development with Spines.",
+        text: "Expand your reach through professional press releases, podcast appearances, blog tours, and author platform development with Spine Publications.",
         href: "#pr-media-coverage",
     },
     {
@@ -210,7 +210,7 @@ const ServicesGrid2 = () => {
                         with
                     </motion.span>
                     <motion.span variants={headingWord} className="text-brand-gradient inline-block font-semibold">
-                        Spines
+                        Spine Publications
                     </motion.span>
                 </motion.h2>
 

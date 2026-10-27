@@ -72,7 +72,7 @@ const Hero = () => {
                             className="text-brand-gradient animate__animated animate__fadeInUp animate__slow mt-1 block text-[32px] font-semibold tracking-[-0.01em] sm:text-[44px] md:text-[52px] lg:text-[58px] xl:text-[64px] 2xl:text-[76px]"
                             style={{ animationDelay: "0.4s" }}
                         >
-                            Premium Publishing Made Simple.
+                            Premium Publishing Made Simple
                         </span>
                     </h1>
 

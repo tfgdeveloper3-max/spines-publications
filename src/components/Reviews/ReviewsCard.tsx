@@ -115,7 +115,7 @@ const ReviewCard = forwardRef<HTMLElement, { review: Review }>(({ review }, ref)
                 <span className="font-inter rounded-full bg-[#e8f8f2] px-3 py-1 text-[11px] font-medium text-[#13866a] xl:text-[12px]">
                     {review.service}
                 </span>
-                <span className="font-inter text-[11px] text-[#9aa0a8] xl:text-[12px]">Spines Publications</span>
+                <span className="font-inter text-[11px] text-[#9aa0a8] xl:text-[12px]">Spine Publicationss</span>
             </div>
         </motion.article>
     );

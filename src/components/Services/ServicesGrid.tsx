@@ -58,7 +58,7 @@ const services: Service[] = [
     {
         icon: <ChipIcon />,
         title: "Manuscript Refinement",
-        text: "Transform your initial draft into a polished, market-ready masterpiece. Spines provides expert proofreading, copy editing, and developmental guidance tailored to your voice.",
+        text: "Transform your initial draft into a polished, market-ready masterpiece. Spine Publications provides expert proofreading, copy editing, and developmental guidance tailored to your voice.",
         href: "#editing",
     },
     {
@@ -70,7 +70,7 @@ const services: Service[] = [
     {
         icon: <ChipIcon />,
         title: "Print & Digital Creation",
-        text: "Prepare your book for all major formats effortlessly. Spines formats your manuscript perfectly for eBook readers, paperbacks, hardcovers, and audiobooks.",
+        text: "Prepare your book for all major formats effortlessly. Spine Publications formats your manuscript perfectly for eBook readers, paperbacks, hardcovers, and audiobooks.",
         href: "#formatting",
     },
     {
@@ -82,7 +82,7 @@ const services: Service[] = [
     {
         icon: <RobotIcon />,
         title: "All-in-One Dashboard",
-        text: "Manage every stage of your publishing timeline in real-time with Spines’ intuitive platform—from manuscript submission to sales tracking.",
+        text: "Manage every stage of your publishing timeline in real-time with Spine Publications’ intuitive platform—from manuscript submission to sales tracking.",
         href: "#dashboard",
     },
     {
@@ -213,7 +213,7 @@ const ServicesGrid = () => {
                         by
                     </motion.span>
                     <motion.span variants={headingWord} className="inline-block font-normal">
-                        Spines
+                        Spine Publications
                     </motion.span>
                 </motion.h2>
 

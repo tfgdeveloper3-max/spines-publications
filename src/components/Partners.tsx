@@ -15,7 +15,7 @@ const track = [...logos, ...logos, ...logos, ...logos];
 
 const Partners = () => {
     return (
-        <section className="relative w-full overflow-hidden bg-white pb-16 pt-4 sm:pb-20 lg:pb-24">
+        <section className="relative w-full overflow-hidden bg-white pb-26 pt-4 sm:pb-20 lg:pb-24">
             <style>{`
                 @keyframes partners-marquee {
                     from { transform: translate3d(0, 0, 0); }
@@ -51,13 +51,13 @@ const Partners = () => {
                         <div
                             key={i}
                             aria-hidden={i >= logos.length}
-                            className="flex shrink-0 items-center px-7 sm:px-10 lg:px-12 xl:px-14 2xl:px-16"
+                            className="flex shrink-0 items-center px-7 sm:px-14 lg:px-12 xl:px-14 2xl:px-16"
                         >
                             <img
                                 src={l.src}
                                 alt={i < logos.length ? l.alt : ""}
                                 draggable={false}
-                                className={`${l.h} w-auto select-none object-contain transition-transform duration-500 hover:-translate-y-1 hover:scale-110`}
+                                className={`${l.h} w-auto select-none object-contain transition-transform duration-500 hover:-translate-y-1 hover:scale-75`}
                             />
                         </div>
                     ))}

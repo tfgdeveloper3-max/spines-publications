@@ -1,0 +1,3 @@
+User-agent: *
+Allow:/
+Sitemap: http://spinepublications.com/sitemap.xml

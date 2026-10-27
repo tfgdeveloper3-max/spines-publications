@@ -73,7 +73,7 @@ const ReviewsList = ({ onWrite }: { onWrite: () => void }) => {
                         transition={{ duration: 1.1, delay: 0.3, ease: smooth }}
                         className="font-inter mt-3 max-w-[560px] text-[13.5px] leading-[1.7] text-[#5a5f66] xl:max-w-[620px] xl:text-[15px] 2xl:max-w-[720px] 2xl:text-[17px]"
                     >
-                        From first-time writers to seasoned professionals, authors trust Spines to write, edit, design, publish,
+                        From first-time writers to seasoned professionals, authors trust Spine Publications to write, edit, design, publish,
                         and market their books.
                     </motion.p>
                 </div>

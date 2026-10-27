@@ -1,7 +1,7 @@
 import { motion, useReducedMotion, type Easing, type Variants } from "framer-motion";
 import { ArrowCircle } from "./Navbar";
 import QuoteModal from "./QuoteModal";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 const smooth: Easing = [0.16, 1, 0.3, 1];
 
@@ -15,14 +15,6 @@ const quicklinks = [
     { label: "Services", href: "#services" },
     { label: "Portfolio", href: "#portfolio" },
     { label: "Blog", href: "#blog" },
-];
-
-const services = [
-    "Ghostwriting & Manuscript Development",
-    "Editing & Proofreading",
-    "Cover Design & Illustrations",
-    "Publishing & Distribution",
-    "Marketing & PR Campaigns",
 ];
 
 const disclaimer =
@@ -135,6 +127,16 @@ const InfoIcon = () => (
 const Footer = () => {
     const year = new Date().getFullYear();
     const [quoteOpen, setQuoteOpen] = useState(false);
+    const [email, setEmail] = useState("");
+    const [subscribed, setSubscribed] = useState(false);
+
+    const handleSubscribe = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!email.trim()) return;
+        // TODO: connect your newsletter API here
+        setSubscribed(true);
+        setEmail("");
+    };
 
     return (
         <>
@@ -148,7 +150,7 @@ const Footer = () => {
                     viewport={{ once: true, margin: "-40px" }}
                     className="mx-auto w-full max-w-[1000px] px-5 sm:px-8 lg:px-6 xl:max-w-[1080px] 2xl:max-w-[1280px]"
                 >
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.35fr_0.55fr_1.15fr_0.95fr] lg:gap-x-8">
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.35fr_0.55fr_0.95fr_1.15fr] lg:gap-x-8">
                         <motion.div variants={col} className="col-span-2 md:col-span-3 lg:col-span-1">
                             <h2 className="font-clash text-[30px] leading-[1.15] tracking-[-0.01em] text-[#141414] sm:text-[34px] lg:text-[32px] xl:text-[36px] 2xl:text-[44px]">
                                 <span className="block font-normal">Your Story</span>
@@ -178,17 +180,6 @@ const Footer = () => {
                             </ul>
                         </motion.div>
 
-                        <motion.div variants={col} className="col-span-2 order-last md:order-none md:col-span-1">
-                            <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Services</h3>
-                            <ul className="font-inter mt-3 flex flex-col gap-2 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
-                                {services.map((s) => (
-                                    <li key={s}>
-                                        <FooterLink href="#services">{s}</FooterLink>
-                                    </li>
-                                ))}
-                            </ul>
-                        </motion.div>
-
                         <motion.div variants={col}>
                             <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Contact</h3>
                             <ul className="font-inter mt-3 flex flex-col gap-2.5 text-[13px] xl:text-[13.5px] 2xl:text-[15px]">
@@ -205,6 +196,40 @@ const Footer = () => {
                                     </a>
                                 </li>
                             </ul>
+                        </motion.div>
+
+                        <motion.div variants={col} className="col-span-2 md:col-span-1">
+                            <h3 className="font-clash text-[14px] font-medium text-[#141414] xl:text-[15px] 2xl:text-[17px]">Newsletter</h3>
+                            <p className="font-inter mt-3 text-[13px] leading-[1.6] text-[#3f4650] xl:text-[13.5px] 2xl:text-[15px]">
+                                Get publishing tips, author stories and exclusive offers straight to your inbox.
+                            </p>
+
+                            {subscribed ? (
+                                <p role="status" className="font-inter mt-4 text-[13px] font-medium text-[#13866a] xl:text-[13.5px] 2xl:text-[15px]">
+                                    Subscribed! Check your inbox for a welcome email.
+                                </p>
+                            ) : (
+                                <form
+                                    onSubmit={handleSubscribe}
+                                    className="mt-4 flex items-center gap-1 rounded-full border border-white/70 bg-white/70 p-[4px] pl-4 shadow-[0_6px_20px_rgba(15,61,52,0.06)] backdrop-blur-md transition-colors focus-within:border-[#1fc79d]"
+                                >
+                                    <input
+                                        type="email"
+                                        required
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="Your email"
+                                        aria-label="Email address"
+                                        className="font-inter min-w-0 flex-1 bg-transparent text-[13px] text-[#141414] outline-none placeholder:text-[#8a9098] xl:text-[13.5px] 2xl:text-[15px]"
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="font-inter bg-brand-gradient h-[34px] shrink-0 rounded-full px-4 text-[13px] font-medium text-[#0f3d34] transition-transform duration-300 hover:scale-[1.04] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#13866a] xl:h-[36px] 2xl:h-[42px] 2xl:text-[14.5px]"
+                                    >
+                                        Subscribe
+                                    </button>
+                                </form>
+                            )}
                         </motion.div>
                     </div>
 

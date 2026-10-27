@@ -72,7 +72,7 @@ const items: Item[] = [
         points: [
             "Create professional paid campaigns to promote your book",
             "Collaborate with marketing experts on tailored launch strategies",
-            "Gain exclusive access to Spines Academy for ongoing guidance",
+            "Gain exclusive access to Spine Publications Academy for ongoing guidance",
         ],
     },
     {

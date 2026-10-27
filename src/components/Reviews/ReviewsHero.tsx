@@ -88,7 +88,7 @@ const ReviewsHero = ({ onWrite }: { onWrite: () => void }) => {
                             <SplitWords text="Reviews from authors" />
                         </span>
                         <span className="block text-[32px] font-semibold sm:text-[44px] lg:text-[48px] xl:text-[56px] 2xl:text-[68px]">
-                            <SplitWords text="who published with Spines" className="text-brand-gradient" />
+                            <SplitWords text="who published with Spine Publications" className="text-brand-gradient" />
                         </span>
                     </motion.h1>
 
@@ -154,7 +154,7 @@ const ReviewsHero = ({ onWrite }: { onWrite: () => void }) => {
                         transition={{ duration: 1.5, delay: 0.6, ease: smooth }}
                         className="relative z-10 rounded-[18px] border border-white bg-white/85 p-6 shadow-[0_30px_70px_rgba(15,61,52,0.14)] backdrop-blur-xl xl:p-7 2xl:p-9"
                     >
-                        <p className="font-inter text-[12px] font-semibold uppercase tracking-[0.12em] text-[#13866a] xl:text-[12.5px]">Spines Publications</p>
+                        <p className="font-inter text-[12px] font-semibold uppercase tracking-[0.12em] text-[#13866a] xl:text-[12.5px]">Spine Publicationss</p>
                         <div className="mt-3">
                             <RatingSummary list={reviews} />
                         </div>

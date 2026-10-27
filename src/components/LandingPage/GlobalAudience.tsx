@@ -18,7 +18,7 @@ const BOOK_COUNT = 10;
 
 const books: Book[] = Array.from({ length: BOOK_COUNT }, (_, i) => {
     const no = String(i + 1).padStart(2, "0");
-    return { src: `/images/Portfolio/${no}.png`, alt: `Book published with Spines ${i + 1}` };
+    return { src: `/images/Portfolio/${no}.png`, alt: `Book published with Spine Publications ${i + 1}` };
 });
 
 const AUTOPLAY_MS = 4200;
@@ -185,8 +185,8 @@ const NavButton = ({ dir, onClick }: { dir: "prev" | "next"; onClick: () => void
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         className={`flex h-[42px] w-[42px] items-center justify-center rounded-full outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-[#40C1AC] focus-visible:ring-offset-2 xl:h-[46px] xl:w-[46px] 2xl:h-[52px] 2xl:w-[52px] ${dir === "next"
-                ? "bg-brand-gradient text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.35)]"
-                : "bg-white text-[#2a9a76] ring-1 ring-[#40C1AC]/40 hover:shadow-[0_8px_22px_rgba(64,193,172,0.2)]"
+            ? "bg-brand-gradient text-[#0f3d34] shadow-[0_8px_22px_rgba(4,221,166,0.35)]"
+            : "bg-white text-[#2a9a76] ring-1 ring-[#40C1AC]/40 hover:shadow-[0_8px_22px_rgba(64,193,172,0.2)]"
             }`}
     >
         <svg viewBox="0 0 24 24" fill="none" className="h-[45%] w-[45%]" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -265,7 +265,7 @@ const GlobalAudience = () => {
                     transition={{ duration: 1, ease: smooth }}
                     className="bg-brand-gradient font-inter inline-flex h-[24px] items-center rounded-full px-[20px] text-[11.5px] font-medium text-[#0f3d34] xl:h-[26px] xl:text-[12.5px] 2xl:h-[28px] 2xl:text-[13.5px]"
                 >
-                    The Publishing Journey
+                    How It Works
                 </motion.span>
 
                 <motion.h2

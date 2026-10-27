@@ -26,7 +26,7 @@ const plans: Plan[] = [
             { text: "Custom Cover Design & Interior Page Formatting", tip: "Custom cover artwork and professionally formatted interior pages." },
             { text: "Professional Light Copyediting Support", tip: "Light copyediting support for grammar, spelling, and clarity." },
             { text: "Strategic Book Discovery & Launch Strategy Roadmap", tip: "A roadmap to help readers discover your book and support its launch." },
-            { text: "Exclusive Access to the Spines Author Learning Center", tip: "Access learning resources designed to support your author journey." },
+            { text: "Exclusive Access to the Spine Publications Author Learning Center", tip: "Access learning resources designed to support your author journey." },
         ],
         image: "/images/pricing-essentials.png",
         imageAlt: "Laptop showing a publishing dashboard next to a stack of books",
@@ -209,13 +209,15 @@ const PlanCard = ({ plan, onSelect }: { plan: Plan; onSelect: (plan: Plan) => vo
         </div>
 
         <div className="relative mt-4 aspect-[186/93] overflow-hidden rounded-[4px] bg-[#eef3f1] xl:mt-5">
-            <img
-                src={plan.image}
-                alt={plan.imageAlt}
-                loading="lazy"
-                draggable={false}
-                className="absolute inset-0 h-full w-full select-none object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
-            />
+            <div className="absolute inset-4 xl:inset-5">
+                <img
+                    src={plan.image}
+                    alt={plan.imageAlt}
+                    loading="lazy"
+                    draggable={false}
+                    className="block h-full w-full select-none object-contain transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.07]"
+                />
+            </div>
         </div>
     </motion.article>
 );
@@ -251,7 +253,7 @@ const PricingPlans = () => {
                             viewport={{ once: true, margin: "-60px" }}
                             className="font-clash mt-3 max-w-4xl text-[27px] leading-[1.15] tracking-[-0.01em] text-[#1d2a30] sm:text-[32px] lg:text-[34px] xl:text-[38px]"
                         >
-                            {"Select the Ideal Spines Publication Package".split(" ").map((w, i) => (
+                            {"Select the Ideal Spine Publications Package".split(" ").map((w, i) => (
                                 <motion.span key={`package-a${i}`} variants={word} className="text-brand-gradient mr-[0.25em] inline-block font-semibold">
                                     {w}
                                 </motion.span>

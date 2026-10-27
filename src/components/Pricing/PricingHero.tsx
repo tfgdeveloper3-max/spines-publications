@@ -44,7 +44,7 @@ const PricingHero = () => {
                         className="font-clash leading-[1.08] tracking-[-0.015em]"
                     >
                         <span className="block text-[34px] font-semibold sm:text-[48px] md:text-[56px] lg:text-[62px] xl:text-[70px] 2xl:text-[84px]">
-                            <SplitWords text="Transparent Publishing Packages by Spines Publication" className="text-brand-gradient" />
+                            <SplitWords text="Transparent Publishing Packages by Spine Publications" className="text-brand-gradient" />
                         </span>
                         <span className="mt-1 block text-[22px] font-normal text-[#1c1c1c] sm:mt-2 sm:text-[30px] md:text-[34px] lg:text-[38px] xl:text-[42px] 2xl:text-[50px]">
                             <SplitWords text="Flexible Plans Tailored to Fit Your Budget &amp; Publishing Goals" />
@@ -57,7 +57,7 @@ const PricingHero = () => {
                         transition={{ duration: 1.3, delay: 1.1, ease: smooth }}
                         className="font-inter mt-4 max-w-[360px] text-[13.5px] leading-[1.65] text-[#4a4a4a] sm:mt-5 sm:max-w-[640px] sm:text-[15px] lg:max-w-[780px] lg:text-[16.5px] xl:max-w-[880px] xl:text-[18px] 2xl:max-w-[1000px] 2xl:text-[20px]"
                     >
-                        Choose a publishing path designed around your vision. Whether you are launching your first indie eBook or building a global multi-format bestseller, Spines provides straightforward pricing, zero hidden fees, and maximum royalty retention every step of the way.
+                        Choose a publishing path designed around your vision. Whether you are launching your first indie eBook or building a global multi-format bestseller, Spine Publications provides straightforward pricing, zero hidden fees, and maximum royalty retention every step of the way.
                     </motion.p>
 
                     <motion.div

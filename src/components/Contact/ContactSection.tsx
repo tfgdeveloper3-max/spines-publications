@@ -215,7 +215,7 @@ const QuoteForm = () => {
                             Get Your Free Publishing Quote
                         </motion.h3>
                         <motion.p variants={formField} className="font-inter mt-1 text-[12px] text-[#0f2d27] xl:text-[13px] 2xl:text-[14.5px]">
-                            Share your manuscript details with Spines specialists!
+                            Share your manuscript details with Spine Publications specialists!
                         </motion.p>
 
                         <div className="mt-5 flex flex-col gap-3 xl:mt-6">
@@ -282,7 +282,7 @@ const QuoteForm = () => {
                                     </svg>
                                 </span>
                                 <span className="font-inter text-[11px] leading-[1.5] text-[#0f2d27] xl:text-[11.5px] 2xl:text-[13px]">
-                                    By submitting this form and providing your phone number, you agree to receive automated project updates from Spines and accept our{" "}
+                                    By submitting this form and providing your phone number, you agree to receive automated project updates from Spine Publications and accept our{" "}
                                     <a href="/terms" className="underline-offset-2 hover:underline">Terms</a> and{" "}
                                     <a href="/privacy" className="underline-offset-2 hover:underline">Privacy Policy</a>.
                                 </span>
@@ -348,7 +348,7 @@ const ContactSection = () => {
                             className="font-clash leading-[1.15] tracking-[-0.01em]"
                         >
                             <span className="block text-[30px] font-semibold sm:text-[38px] lg:text-[42px] xl:text-[48px] 2xl:text-[58px]">
-                                <SplitWords text="Connect with Spines:" className="text-brand-gradient" />
+                                <SplitWords text="Connect with Spine Publications:" className="text-brand-gradient" />
                             </span>
                             <span className="mt-1 block text-[24px] font-normal text-[#1c1c1c] sm:text-[32px] lg:text-[36px] xl:text-[42px] 2xl:text-[50px]">
                                 <SplitWords text="Expert Author Support is Just a Message Away" />
@@ -362,7 +362,7 @@ const ContactSection = () => {
                             transition={{ duration: 1.1, delay: 0.4, ease: smooth }}
                             className="font-inter mt-4 max-w-[560px] text-[13px] leading-[1.7] text-[#5a5f66] lg:max-w-[600px] xl:max-w-[660px] xl:text-[14px] 2xl:max-w-[760px] 2xl:text-[16px]"
                         >
-                            We are eager to hear about your book! Whether you have questions about our editing packages, distribution channels, or want to discuss a custom publishing plan, the Spines team is here to guide you every step of the way.
+                            We are eager to hear about your book! Whether you have questions about our editing packages, distribution channels, or want to discuss a custom publishing plan, the Spine Publications team is here to guide you every step of the way.
                         </motion.p>
                     </div>
 
@@ -423,7 +423,7 @@ const ContactSection = () => {
                                 </span>
                             </h2>
                             <p className="font-inter mx-auto mt-4 max-w-[420px] text-[13px] leading-[1.7] text-[#4b5058] lg:mx-0 xl:max-w-[460px] xl:text-[14px] 2xl:max-w-[540px] 2xl:text-[16px]">
-                                Experience a streamlined publishing process with Spines. From manuscript refinement and cover design to global distribution and marketing, we handle the complex technical details so you can share your voice with the world.
+                                Experience a streamlined publishing process with Spine Publications. From manuscript refinement and cover design to global distribution and marketing, we handle the complex technical details so you can share your voice with the world.
                             </p>
                             <button
                                 type="button"

@@ -200,7 +200,7 @@ const WriteReviewModal = ({ open, onClose }: { open: boolean; onClose: () => voi
                                     <h3 id="write-review-title" className="font-clash pr-10 text-[24px] font-semibold text-[#141414] sm:text-[26px]">
                                         Write a <span className="text-brand-gradient">review</span>
                                     </h3>
-                                    <p className="font-inter mt-1 text-[13.5px] text-[#4a4f57]">Tell other authors about your experience with Spines.</p>
+                                    <p className="font-inter mt-1 text-[13.5px] text-[#4a4f57]">Tell other authors about your experience with Spine Publications.</p>
 
                                     <div className="mt-6">
                                         <p className="font-inter mb-2 text-[13px] font-semibold text-[#141414]">Rate your experience</p>

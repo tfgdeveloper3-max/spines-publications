@@ -47,7 +47,7 @@ const AboutHero = () => {
                             <SplitWords text="Empowering Authors Worldwide" className="text-brand-gradient" />
                         </span>
                         <span className="mt-1 block text-[22px] font-normal text-[#1c1c1c] sm:mt-2 sm:text-[30px] md:text-[34px] lg:text-[38px] xl:text-[42px] 2xl:text-[50px]">
-                            <SplitWords text="The Future of Book Publishing with Spines" />
+                            <SplitWords text="The Future of Book Publishing with Spine Publications" />
                         </span>
                     </motion.h1>
 
@@ -57,7 +57,7 @@ const AboutHero = () => {
                         transition={{ duration: 1.3, delay: 1.1, ease: smooth }}
                         className="font-inter mt-4 max-w-[360px] text-[13.5px] leading-[1.65] text-[#4a4a4a] sm:mt-5 sm:max-w-[640px] sm:text-[15px] lg:max-w-[780px] lg:text-[16.5px] xl:max-w-[880px] xl:text-[18px] 2xl:max-w-[1000px] 2xl:text-[20px]"
                     >
-                        At Spines, we are redefining the publishing experience by combining innovative tech solutions with expert human craftsmanship. We eliminate the traditional barriers to self-publishing, providing creators with transparent guidance, total creative ownership, and professional tools to bring every story to life.
+                        At Spine Publications, we are redefining the publishing experience by combining innovative tech solutions with expert human craftsmanship. We eliminate the traditional barriers to self-publishing, providing creators with transparent guidance, total creative ownership, and professional tools to bring every story to life.
                     </motion.p>
 
                     <motion.div

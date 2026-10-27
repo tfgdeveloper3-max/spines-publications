@@ -61,7 +61,7 @@ const AvatarBubble = ({ a, i }: { a: Avatar; i: number }) => {
                 whileHover={{ scale: 1.08 }}
                 className="aspect-square w-full overflow-hidden rounded-full bg-[#e9ecef] shadow-[0_10px_25px_rgba(30,40,60,0.12)] ring-[3px] ring-white"
             >
-                <img src={a.src} alt="Spines author" draggable={false} className="h-full w-full select-none object-cover" />
+                <img src={a.src} alt="Spine Publications author" draggable={false} className="h-full w-full select-none object-cover" />
             </motion.div>
         </motion.div>
     );
@@ -81,7 +81,7 @@ const DidYouKnow = () => {
                             transition={{ duration: 1.1, delay: i * 0.12, ease: smooth }}
                             className="h-12 w-12 overflow-hidden rounded-full bg-[#e9ecef] shadow-md ring-[3px] ring-white sm:h-14 sm:w-14"
                         >
-                            <img src={a.src} alt="Spines author" className="h-full w-full object-cover" />
+                            <img src={a.src} alt="Spine Publications author" className="h-full w-full object-cover" />
                         </motion.div>
                     ))}
                 </div>
@@ -151,7 +151,7 @@ const DidYouKnow = () => {
                             {...fadeUp(0.85)}
                             className="font-inter mt-3 max-w-[420px] text-[13px] leading-[1.7] text-[#4c5466] xl:max-w-[460px] xl:text-[13.5px] 2xl:max-w-[520px] 2xl:text-[15px]"
                         >
-                            Built by authors who know these challenges firsthand, Spines was created to{" "}
+                            Built by authors who know these challenges firsthand, Spine Publications was created to{" "}
                             <strong className="font-semibold text-[#2c3445]">level the playing field</strong>. We remove the roadblocks so you can focus on what matters most—sharing your message with the world.
                         </motion.p>
 

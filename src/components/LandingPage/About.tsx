@@ -67,7 +67,7 @@ const About = () => {
                     <span
                         className="bg-brand-gradient font-inter animate__animated animate__fadeIn animate__slow inline-flex h-[24px] items-center rounded-full px-[14px] text-[11px] font-medium text-[#0f3d34] sm:h-[26px] sm:text-[12px] xl:h-[28px] xl:text-[13px]"
                     >
-                        Why Spines
+                        Why Spine Publications
                     </span>
 
                     <motion.h2
@@ -153,7 +153,7 @@ const About = () => {
                         >
                             <motion.img
                                 src={booksImg}
-                                alt="Books published with Spines"
+                                alt="Books published with Spine Publications"
                                 draggable={false}
                                 animate={{ y: [0, -10, 0] }}
                                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}

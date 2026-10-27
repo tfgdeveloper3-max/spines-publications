@@ -226,7 +226,7 @@ const QuoteModal = ({ open, onClose, plan }: { open: boolean; onClose: () => voi
                                 className="mt-8 flex items-center gap-3 rounded-[14px] bg-white/45 p-3 ring-1 ring-white/70 backdrop-blur-sm"
                             >
                                 <span className="font-clash text-[26px] font-semibold leading-none text-[#0f1f1b]">8,000+</span>
-                                <span className="font-inter text-[12.5px] leading-[1.4] text-[#0f2d27]">authors have published their books with Spines</span>
+                                <span className="font-inter text-[12.5px] leading-[1.4] text-[#0f2d27]">authors have published their books with Spine Publications</span>
                             </motion.div>
                         </aside>
 

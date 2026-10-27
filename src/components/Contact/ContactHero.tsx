@@ -44,7 +44,7 @@ const ContactHero = () => {
                         className="font-clash leading-[1.08] tracking-[-0.015em]"
                     >
                         <span className="block text-[34px] font-semibold sm:text-[48px] md:text-[56px] lg:text-[62px] xl:text-[70px] 2xl:text-[84px]">
-                            <SplitWords text="Connect with the Spines Publishing Team" className="text-brand-gradient" />
+                            <SplitWords text="Connect with the Spine Publications Publishing Team" className="text-brand-gradient" />
                         </span>
                         <span className="mt-1 block text-[22px] font-normal text-[#1c1c1c] sm:mt-2 sm:text-[30px] md:text-[34px] lg:text-[38px] xl:text-[42px] 2xl:text-[50px]">
                             <SplitWords text="Let’s Turn Your Writing Dreams Into a Published Reality" />
@@ -57,7 +57,7 @@ const ContactHero = () => {
                         transition={{ duration: 1.3, delay: 1.1, ease: smooth }}
                         className="font-inter mt-4 max-w-[360px] text-[13.5px] leading-[1.65] text-[#4a4a4a] sm:mt-5 sm:max-w-[640px] sm:text-[15px] lg:max-w-[780px] lg:text-[16.5px] xl:max-w-[880px] xl:text-[18px] 2xl:max-w-[1000px] 2xl:text-[20px]"
                     >
-                        Have questions about our publishing packages, editing services, or distribution process? Our team of experts at Spines is here to help you every step of the way. Reach out today to schedule a consultation and discover how simple bringing your book to market can be.
+                        Have questions about our publishing packages, editing services, or distribution process? Our team of experts at Spine Publications is here to help you every step of the way. Reach out today to schedule a consultation and discover how simple bringing your book to market can be.
                     </motion.p>
 
                     <motion.div

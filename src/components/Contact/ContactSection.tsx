@@ -1,8 +1,10 @@
 import { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, type Easing, type Variants } from "framer-motion";
 import { ArrowCircle } from "../Navbar";
 import QuoteModal from "../QuoteModal";
 import { submitLead } from "../../lib/submitLead";
+import { THANK_YOU_PATH, saveThankYouState, type ThankYouState } from "../../lib/thankYou";
 
 const smooth: Easing = [0.16, 1, 0.3, 1];
 
@@ -72,7 +74,7 @@ const SplitWords = ({ text, className }: { text: string; className?: string }) =
 
 type FormState = { name: string; email: string; phone: string; message: string; consent: boolean };
 type Errors = Partial<Record<keyof FormState, string>>;
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sending" | "error";
 
 const initialForm: FormState = { name: "", email: "", phone: "", message: "", consent: false };
 
@@ -114,6 +116,8 @@ const QuoteForm = () => {
     const [errors, setErrors] = useState<Errors>({});
     const [status, setStatus] = useState<Status>("idle");
     const [serverError, setServerError] = useState("");
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const onChange = (key: keyof FormState) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const value = key === "consent" ? (e.target as HTMLInputElement).checked : e.target.value;
@@ -138,8 +142,16 @@ const QuoteForm = () => {
 
         try {
             await submitLead(form);
-            setStatus("sent");
-            setForm(initialForm);
+
+            // remember where the user came from, then go to the thank-you page
+            const thankYouState: ThankYouState = {
+                from: `${location.pathname}${location.search}${location.hash}`,
+                name: form.name.trim(),
+                email: form.email.trim(),
+                plan: null,
+            };
+            saveThankYouState(thankYouState);
+            navigate(THANK_YOU_PATH, { state: thankYouState });
         } catch (err) {
             setStatus("error");
             setServerError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
@@ -163,171 +175,129 @@ const QuoteForm = () => {
                 className="pointer-events-none absolute -right-20 -top-20 -z-10 h-64 w-64 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.45),transparent)]"
             />
 
-            <AnimatePresence mode="wait">
-                {status === "sent" ? (
-                    <motion.div
-                        key="sent"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.7, ease: smooth }}
-                        className="flex min-h-[420px] flex-col items-center justify-center text-center"
-                    >
-                        <motion.span
-                            initial={{ scale: 0, rotate: -90 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ duration: 0.8, delay: 0.15, ease: smooth }}
-                            className="flex h-16 w-16 items-center justify-center rounded-full bg-white/35 ring-1 ring-white/70"
-                        >
-                            <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="#0f3d34" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                                <motion.path
-                                    d="M5 12.5l4.5 4.5L19 7.5"
-                                    initial={{ pathLength: 0 }}
-                                    animate={{ pathLength: 1 }}
-                                    transition={{ duration: 0.6, delay: 0.5, ease: smooth }}
-                                />
+            <motion.form
+                noValidate
+                onSubmit={onSubmit}
+                variants={formFields}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+            >
+                <motion.h3 variants={formField} className="font-clash text-[21px] font-semibold text-[#0f1f1b] sm:text-[23px] xl:text-[25px] 2xl:text-[29px]">
+                    Get Your Free Publishing Quote
+                </motion.h3>
+                <motion.p variants={formField} className="font-inter mt-1 text-[12px] text-[#0f2d27] xl:text-[13px] 2xl:text-[14.5px]">
+                    Share your manuscript details with Spine Publications specialists!
+                </motion.p>
+
+                <div className="mt-5 flex flex-col gap-3 xl:mt-6">
+                    <Field error={errors.name}>
+                        <label htmlFor="q-name" className="sr-only">Your Full Name</label>
+                        <input
+                            id="q-name"
+                            type="text"
+                            autoComplete="name"
+                            placeholder="Your Full Name"
+                            value={form.name}
+                            onChange={onChange("name")}
+                            className={`${inputBase} ${border("name")} h-[42px] xl:h-[46px] 2xl:h-[52px]`}
+                        />
+                    </Field>
+                    <Field error={errors.email}>
+                        <label htmlFor="q-email" className="sr-only">Your Email Address</label>
+                        <input
+                            id="q-email"
+                            type="email"
+                            autoComplete="email"
+                            placeholder="Your Email Address"
+                            value={form.email}
+                            onChange={onChange("email")}
+                            className={`${inputBase} ${border("email")} h-[42px] xl:h-[46px] 2xl:h-[52px]`}
+                        />
+                    </Field>
+                    <Field error={errors.phone}>
+                        <label htmlFor="q-phone" className="sr-only">Your Contact Number</label>
+                        <input
+                            id="q-phone"
+                            type="tel"
+                            autoComplete="tel"
+                            placeholder="Your Contact Number"
+                            value={form.phone}
+                            onChange={onChange("phone")}
+                            className={`${inputBase} ${border("phone")} h-[42px] xl:h-[46px] 2xl:h-[52px]`}
+                        />
+                    </Field>
+                    <Field>
+                        <label htmlFor="q-message" className="sr-only">Tell us about your book concept</label>
+                        <textarea
+                            id="q-message"
+                            rows={4}
+                            placeholder="Tell us about your book concept (Genre, Word Count, Goals)"
+                            value={form.message}
+                            onChange={onChange("message")}
+                            className={`${inputBase} border-transparent resize-none py-3 h-[100px] xl:h-[112px] 2xl:h-[130px]`}
+                        />
+                    </Field>
+                </div>
+
+                <Field error={errors.consent}>
+                    <label className="mt-5 flex cursor-pointer items-start gap-2.5">
+                        <span className="relative mt-[2px] flex h-[15px] w-[15px] shrink-0 items-center justify-center">
+                            <input
+                                type="checkbox"
+                                checked={form.consent}
+                                onChange={onChange("consent")}
+                                className="peer absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-[3px] border-[1.5px] border-[#0f3d34]/70 bg-white/20 transition-colors checked:border-[#0f3d34] checked:bg-[#0f3d34] focus-visible:ring-2 focus-visible:ring-[#0f3d34]/30"
+                            />
+                            <svg viewBox="0 0 24 24" className="pointer-events-none relative h-[11px] w-[11px] opacity-0 transition-opacity peer-checked:opacity-100" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M5 12.5l4.5 4.5L19 7.5" />
                             </svg>
-                        </motion.span>
-                        <h3 className="font-clash mt-5 text-[22px] font-semibold text-[#0f2d27] xl:text-[24px]">Thank you!</h3>
-                        <p className="font-inter mt-2 max-w-[280px] text-[13.5px] leading-[1.6] text-[#0f3d34]/80">
-                            We've received your request. Our publishing experts will reach out within one business day.
-                        </p>
-                        <button
-                            type="button"
-                            onClick={() => setStatus("idle")}
-                            className="font-inter mt-6 rounded-full bg-white/40 px-6 py-2.5 text-[13.5px] font-medium text-[#0f3d34] ring-1 ring-white/70 transition-colors hover:bg-white/60"
+                        </span>
+                        <span className="font-inter text-[11px] leading-[1.5] text-[#0f2d27] xl:text-[11.5px] 2xl:text-[13px]">
+                            By submitting this form and providing your phone number, you agree to receive automated project updates from Spine Publications and accept our{" "}
+                            <a href="/terms" className="underline-offset-2 hover:underline">Terms</a> and{" "}
+                            <a href="/privacy" className="underline-offset-2 hover:underline">Privacy Policy</a>.
+                        </span>
+                    </label>
+                </Field>
+
+                <AnimatePresence>
+                    {status === "error" && serverError && (
+                        <motion.div
+                            role="alert"
+                            initial={{ opacity: 0, y: -6, height: 0 }}
+                            animate={{ opacity: 1, y: 0, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.35, ease: smooth }}
+                            className="font-inter mt-4 rounded-[8px] bg-white/60 px-4 py-3 text-[12.5px] font-medium text-[#7a1020] ring-1 ring-[#7a1020]/20 xl:text-[13.5px]"
                         >
-                            Send another request
-                        </button>
-                    </motion.div>
-                ) : (
-                    <motion.form
-                        key="form"
-                        noValidate
-                        onSubmit={onSubmit}
-                        variants={formFields}
-                        initial="hidden"
-                        whileInView="show"
-                        exit={{ opacity: 0, y: -10 }}
-                        viewport={{ once: true }}
-                    >
-                        <motion.h3 variants={formField} className="font-clash text-[21px] font-semibold text-[#0f1f1b] sm:text-[23px] xl:text-[25px] 2xl:text-[29px]">
-                            Get Your Free Publishing Quote
-                        </motion.h3>
-                        <motion.p variants={formField} className="font-inter mt-1 text-[12px] text-[#0f2d27] xl:text-[13px] 2xl:text-[14.5px]">
-                            Share your manuscript details with Spine Publications specialists!
-                        </motion.p>
+                            {serverError}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-                        <div className="mt-5 flex flex-col gap-3 xl:mt-6">
-                            <Field error={errors.name}>
-                                <label htmlFor="q-name" className="sr-only">Your Full Name</label>
-                                <input
-                                    id="q-name"
-                                    type="text"
-                                    autoComplete="name"
-                                    placeholder="Your Full Name"
-                                    value={form.name}
-                                    onChange={onChange("name")}
-                                    className={`${inputBase} ${border("name")} h-[42px] xl:h-[46px] 2xl:h-[52px]`}
-                                />
-                            </Field>
-                            <Field error={errors.email}>
-                                <label htmlFor="q-email" className="sr-only">Your Email Address</label>
-                                <input
-                                    id="q-email"
-                                    type="email"
-                                    autoComplete="email"
-                                    placeholder="Your Email Address"
-                                    value={form.email}
-                                    onChange={onChange("email")}
-                                    className={`${inputBase} ${border("email")} h-[42px] xl:h-[46px] 2xl:h-[52px]`}
-                                />
-                            </Field>
-                            <Field error={errors.phone}>
-                                <label htmlFor="q-phone" className="sr-only">Your Contact Number</label>
-                                <input
-                                    id="q-phone"
-                                    type="tel"
-                                    autoComplete="tel"
-                                    placeholder="Your Contact Number"
-                                    value={form.phone}
-                                    onChange={onChange("phone")}
-                                    className={`${inputBase} ${border("phone")} h-[42px] xl:h-[46px] 2xl:h-[52px]`}
-                                />
-                            </Field>
-                            <Field>
-                                <label htmlFor="q-message" className="sr-only">Tell us about your book concept</label>
-                                <textarea
-                                    id="q-message"
-                                    rows={4}
-                                    placeholder="Tell us about your book concept (Genre, Word Count, Goals)"
-                                    value={form.message}
-                                    onChange={onChange("message")}
-                                    className={`${inputBase} border-transparent resize-none py-3 h-[100px] xl:h-[112px] 2xl:h-[130px]`}
-                                />
-                            </Field>
-                        </div>
-
-                        <Field error={errors.consent}>
-                            <label className="mt-5 flex cursor-pointer items-start gap-2.5">
-                                <span className="relative mt-[2px] flex h-[15px] w-[15px] shrink-0 items-center justify-center">
-                                    <input
-                                        type="checkbox"
-                                        checked={form.consent}
-                                        onChange={onChange("consent")}
-                                        className="peer absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-[3px] border-[1.5px] border-[#0f3d34]/70 bg-white/20 transition-colors checked:border-[#0f3d34] checked:bg-[#0f3d34] focus-visible:ring-2 focus-visible:ring-[#0f3d34]/30"
-                                    />
-                                    <svg viewBox="0 0 24 24" className="pointer-events-none relative h-[11px] w-[11px] opacity-0 transition-opacity peer-checked:opacity-100" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M5 12.5l4.5 4.5L19 7.5" />
-                                    </svg>
-                                </span>
-                                <span className="font-inter text-[11px] leading-[1.5] text-[#0f2d27] xl:text-[11.5px] 2xl:text-[13px]">
-                                    By submitting this form and providing your phone number, you agree to receive automated project updates from Spine Publications and accept our{" "}
-                                    <a href="/terms" className="underline-offset-2 hover:underline">Terms</a> and{" "}
-                                    <a href="/privacy" className="underline-offset-2 hover:underline">Privacy Policy</a>.
-                                </span>
-                            </label>
-                        </Field>
-
-                        <AnimatePresence>
-                            {status === "error" && serverError && (
-                                <motion.div
-                                    role="alert"
-                                    initial={{ opacity: 0, y: -6, height: 0 }}
-                                    animate={{ opacity: 1, y: 0, height: "auto" }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    transition={{ duration: 0.35, ease: smooth }}
-                                    className="font-inter mt-4 rounded-[8px] bg-white/60 px-4 py-3 text-[12.5px] font-medium text-[#7a1020] ring-1 ring-[#7a1020]/20 xl:text-[13.5px]"
-                                >
-                                    {serverError}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-
-                        <motion.button
-                            variants={formField}
-                            type="submit"
-                            disabled={status === "sending"}
-                            whileHover={{ scale: 1.04 }}
-                            whileTap={{ scale: 0.97 }}
-                            className="font-inter mt-5 inline-flex h-[42px] min-w-[150px] items-center justify-center gap-2 rounded-full bg-white/45 px-7 text-[14px] font-medium text-[#0f3d34] ring-1 ring-white/70 backdrop-blur-sm transition-colors hover:bg-white/65 disabled:cursor-wait xl:h-[46px] xl:text-[15px] 2xl:h-[52px] 2xl:min-w-[180px] 2xl:text-[16.5px]"
-                        >
-                            {status === "sending" ? (
-                                <>
-                                    <motion.span
-                                        animate={{ rotate: 360 }}
-                                        transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
-                                        className="h-4 w-4 rounded-full border-2 border-[#0f3d34]/30 border-t-[#0f3d34]"
-                                    />
-                                    Sending...
-                                </>
-                            ) : (
-                                "Submit Inquiry"
-                            )}
-                        </motion.button>
-                    </motion.form>
-                )}
-            </AnimatePresence>
+                <motion.button
+                    variants={formField}
+                    type="submit"
+                    disabled={status === "sending"}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="font-inter mt-5 inline-flex h-[42px] min-w-[150px] items-center justify-center gap-2 rounded-full bg-white/45 px-7 text-[14px] font-medium text-[#0f3d34] ring-1 ring-white/70 backdrop-blur-sm transition-colors hover:bg-white/65 disabled:cursor-wait xl:h-[46px] xl:text-[15px] 2xl:h-[52px] 2xl:min-w-[180px] 2xl:text-[16.5px]"
+                >
+                    {status === "sending" ? (
+                        <>
+                            <motion.span
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+                                className="h-4 w-4 rounded-full border-2 border-[#0f3d34]/30 border-t-[#0f3d34]"
+                            />
+                            Sending...
+                        </>
+                    ) : (
+                        "Submit Inquiry"
+                    )}
+                </motion.button>
+            </motion.form>
         </motion.div>
     );
 };

@@ -10,6 +10,8 @@ import ReviewsPage from "./pages/Reviews/page";
 import LiveChat from "./components/LiveChat";
 import TermsPage from "./pages/Terms/page";
 import PrivacyPage from "./pages/Privacy/page";
+import ThankYou from "./components/Thank-you";
+import RefundPage from "./pages/Refund/page";
 
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -43,6 +45,8 @@ function App() {
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/refund-policy" element={<RefundPage />} />
+        <Route path="/thank-you" element={<ThankYou />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

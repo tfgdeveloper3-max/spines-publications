@@ -32,10 +32,32 @@ const scrollToId = (e: MouseEvent<HTMLAnchorElement>, id: string) => {
     history.replaceState(null, "", `#${id}`);
 };
 
+const bodyText = "font-inter text-[14px] leading-[1.85] text-[#4a4f57] xl:text-[15px] 2xl:text-[16.5px]";
+
 const Block = ({ block }: { block: LegalBlock }) => {
     if (typeof block === "string") {
-        return <p className="font-inter text-[14px] leading-[1.85] text-[#4a4f57] xl:text-[15px] 2xl:text-[16.5px]">{block}</p>;
+        return <p className={bodyText}>{block}</p>;
     }
+
+    // numbered clause, e.g. "2.1 A change-of-mind cancellation..."
+    if ("clause" in block) {
+        return (
+            <p className={bodyText}>
+                <span className="font-clash mr-2 font-semibold text-[#13866a]">{block.clause}</span>
+                {block.text}
+            </p>
+        );
+    }
+
+    // small heading inside a section, e.g. "2.2.1 Cancellation Within..."
+    if ("sub" in block) {
+        return (
+            <h3 className="font-clash mt-2 text-[17px] font-medium leading-[1.35] text-[#141414] sm:text-[18px] xl:text-[20px] 2xl:text-[22px]">
+                {block.sub}
+            </h3>
+        );
+    }
+
     return (
         <ul className="flex flex-col gap-3">
             {block.list.map((item, i) => (
@@ -155,7 +177,7 @@ const LegalPage = ({ doc }: { doc: LegalDoc }) => {
                             <div className="relative mt-3 h-[3px] overflow-hidden rounded-full bg-[#eef0f2]">
                                 <motion.span style={{ scaleX: progress }} className="bg-brand-gradient absolute inset-0 origin-left rounded-full" />
                             </div>
-                            <ol className="mt-4 flex flex-col gap-0.5">
+                            <ol className="mt-4 flex max-h-[calc(100vh-16rem)] flex-col gap-0.5 overflow-y-auto">
                                 {doc.sections.map((s, i) => {
                                     const isActive = active === s.id;
                                     return (
@@ -185,6 +207,20 @@ const LegalPage = ({ doc }: { doc: LegalDoc }) => {
                     </aside>
 
                     <div ref={articleRef} className="flex flex-col gap-12 sm:gap-14 2xl:gap-16">
+                        {doc.preface && doc.preface.length > 0 && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-60px" }}
+                                transition={{ duration: 1.1, ease: smooth }}
+                                className="flex flex-col gap-4 rounded-[18px] border border-[#40C1AC]/25 bg-[linear-gradient(135deg,#effcf8_0%,#ffffff_75%)] p-6 sm:p-7 xl:p-8"
+                            >
+                                {doc.preface.map((b, bi) => (
+                                    <Block key={bi} block={b} />
+                                ))}
+                            </motion.div>
+                        )}
+
                         {doc.sections.map((s, i) => (
                             <motion.article
                                 key={s.id}

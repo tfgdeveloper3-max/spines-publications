@@ -1,15 +1,20 @@
 export type LegalListItem = { label?: string; text: string };
 
-export type LegalBlock = string | { list: LegalListItem[] };
-
 export type LegalSection = { id: string; title: string; body: LegalBlock[] };
+
+export type LegalBlock =
+    | string
+    | { list: LegalListItem[] }
+    | { clause: string; text: string }
+    | { sub: string };
 
 export type LegalDoc = {
     badge: string;
     titleBefore: string;
     titleAccent: string;
     intro: string;
-    updated: string;
+    updated?: string;
+    preface?: LegalBlock[];
     sections: LegalSection[];
 };
 

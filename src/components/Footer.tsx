@@ -266,6 +266,10 @@ const Footer = () => {
                             <a href="/privacy" className="transition-colors hover:text-[#1f9c80]">
                                 Privacy Policy
                             </a>
+                            <span>|</span>
+                            <a href="/refund-policy" className="transition-colors hover:text-[#1f9c80]">
+                                Refund Policy
+                            </a>
                         </p>
                     </motion.div>
                 </motion.div>

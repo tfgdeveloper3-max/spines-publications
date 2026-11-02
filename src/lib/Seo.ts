@@ -59,4 +59,17 @@ export const seo = {
             "Read the Spine Publications terms and conditions, including content ownership, original work guarantees, image policy, and limitation of liability.",
         path: "/terms",
     },
+    refund: {
+        title: "Refund & Cancellation Policy | Spine Publications",
+        description:
+            "Learn how refunds and project cancellations work at Spine Publications, including eligibility, the 24-hour cancellation window, and how requests are processed.",
+        path: "/refund-policy",
+    },
+    thankYou: {
+        title: "Thank You | Spine Publications",
+        description:
+            "Thank you for contacting Spine Publications. A publishing expert will reach out within one business day to discuss your book.",
+        path: "/thank-you",
+        noindex: true,
+    },
 } satisfies Record<string, SeoData>;
